@@ -65,7 +65,17 @@ $recup_produits->execute();
             <div class="carte-produit">
 
                 <a href="produit.php?id=<?php echo $produit['id']; ?>" class="lien-carte">
-                    <img src="uploads/<?php echo htmlspecialchars($produit['image'] ?? 'placeholder.png'); ?>" 
+                    
+
+
+
+<img src="<?php echo htmlspecialchars($produit['image'] ?? 'placeholder.png'); ?>"
+
+
+
+
+
+
                          alt="<?php echo htmlspecialchars($produit['nom']); ?>">
 
                     <h3><?php echo htmlspecialchars($produit['nom']); ?></h3>

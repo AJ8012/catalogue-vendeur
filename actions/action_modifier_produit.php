@@ -34,21 +34,23 @@ $update = $bdd->prepare('UPDATE produits SET nom = ?, description = ?, prix = ? 
 $update->execute([$nom, $description, $prix, $id_produit]);
 
 // Gestion des nouvelles images
+// Gestion des nouvelles images avec Cloudinary
 if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
-    $upload_dir = __DIR__ . '/../uploads/';
-    if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
     $files = $_FILES['new_images'];
     for ($i = 0; $i < count($files['name']); $i++) {
         if ($files['error'][$i] !== 0) continue;
-        $ext = pathinfo($files['name'][$i], PATHINFO_EXTENSION);
-        $nom_fichier = time() . '_' . uniqid() . '.' . $ext;
-        $destination = $upload_dir . $nom_fichier;
-        if (move_uploaded_file($files['tmp_name'][$i], $destination)) {
+
+        try {
+            $upload = $cloudinary->uploadApi()->upload(
+                $files['tmp_name'][$i],
+                ['folder' => 'catalogue']
+            );
+            $image_url = $upload['secure_url'];
+
             $insert = $bdd->prepare('INSERT INTO produit_images(produit_id, image) VALUES(?, ?)');
-            $insert->execute([$id_produit, $nom_fichier]);
+            $insert->execute([$id_produit, $image_url]);
+        } catch (Exception $e) {
+            $_SESSION['erreur'] = "Erreur lors de l'upload : " . $e->getMessage();
         }
     }
 }
-
-header('Location: ../index.php');
-exit();
