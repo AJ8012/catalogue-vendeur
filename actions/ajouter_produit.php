@@ -23,11 +23,22 @@ if (empty($_POST['nom']) || empty($_FILES['images']) || empty($_FILES['images'][
 // Configuration Cloudinary
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => 'yme18tjv',
-        'api_key'    => '193269622434582',
-        'api_secret' => 'FQGu7ePvtNecUV187T5Qt8uuQyU',
+        'cloud_name' => getenv('CLOUDINARY_CLOUD_NAME'),
+        'api_key'    => getenv('CLOUDINARY_API_KEY'),
+        'api_secret' => getenv('CLOUDINARY_API_SECRET'),
     ],
 ]);
+
+
+
+
+
+
+
+
+
+
+
 
 $nom = htmlspecialchars($_POST['nom']);
 $description = !empty($_POST['description']) ? htmlspecialchars($_POST['description']) : "";

@@ -4,13 +4,24 @@ require __DIR__ . '/vendor/autoload.php';
 use Cloudinary\Cloudinary;
 
 // Configuration avec tes identifiants réels
+
+
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => 'yme18tjv',
-        'api_key'    => '193269622434582',
-        'api_secret' => 'FQGu7ePvtNecUV187T5Qt8uuQyU',
+        'cloud_name' => getenv('CLOUDINARY_CLOUD_NAME'), // 👈 Render remplace ça par "yme18tjv"
+        'api_key'    => getenv('CLOUDINARY_API_KEY'),    // 👈 Render remplace ça par "193269622434582"
+        'api_secret' => getenv('CLOUDINARY_API_SECRET'), // 👈 Render remplace ça par "FQGu7ePvt..."
     ],
 ]);
+
+
+
+
+
+
+
+
+
 
 // 1. Uploader une image depuis l'URL de démo Cloudinary
 $image_url = 'https://res.cloudinary.com/demo/image/upload/sample.jpg';
