@@ -73,8 +73,8 @@ for ($i = 0; $i < count($images['name']); $i++) {
 }
 
 if ($success) {
-    header('Location: index.php');
+    header('Location: /index.php');
 } else {
-    header('Location: ajouter_produit.php');
+    header('Location: /ajouter_produit.php');
 }
 exit();
