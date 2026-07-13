@@ -60,7 +60,17 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         <?php if (!empty($images)): ?>
             <div class="galerie-images" style="display:flex; flex-wrap:wrap; gap:10px;">
                 <?php foreach ($images as $img): ?>
-                    <img src="uploads/<?php echo htmlspecialchars($img['image']); ?>"
+
+
+
+
+
+                    <img src="<?php echo htmlspecialchars($img['image']); ?>"
+
+
+
+
+                    
                          alt="<?php echo htmlspecialchars($produit['nom']); ?>"
                          style="max-width:200px; height:auto;">
                 <?php endforeach; ?>
@@ -76,7 +86,7 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         <?php endif; ?>
 
         <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
-            <p class="prix"><?php echo number_format($produit['prix'], 2); ?> €</p>
+            <p class="prix"><?php echo number_format($produit['prix'], 2); ?> UM</p>
         <?php else: ?>
             <p class="prix">Prix sur demande</p>
         <?php endif; ?>

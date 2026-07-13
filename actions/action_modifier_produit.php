@@ -53,4 +53,5 @@ if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
             $_SESSION['erreur'] = "Erreur lors de l'upload : " . $e->getMessage();
         }
     }
+    
 }

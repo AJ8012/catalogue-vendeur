@@ -70,7 +70,7 @@ $images = $req_img->fetchAll();
                 <div style="display:flex; flex-wrap:wrap; gap:10px;">
                     <?php foreach ($images as $img): ?>
                         <div style="position:relative; width:100px; height:100px; border:1px solid #ddd; border-radius:4px; overflow:hidden;">
-                            <img src="uploads/<?php echo htmlspecialchars($img['image']); ?>" style="width:100%; height:100%; object-fit:cover;">
+                            <img src="<?php echo htmlspecialchars($img['image']); ?>" style="width:100%; height:100%; object-fit:cover;">
                             <a href="actions/action_supprimer_image.php?id=<?php echo $img['id']; ?>&produit=<?php echo $id_produit; ?>" 
                                style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; text-decoration:none; font-size:16px;"
                                onclick="return confirm('Supprimer cette image ?')">×</a>
