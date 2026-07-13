@@ -1,0 +1,376 @@
+/* ============================================
+   VARIABLES
+   ============================================ */
+:root {
+    --noir: #0e0e0e;
+    --blanc: #ffffff;
+    --gris-tres-clair: #f4f4f4;
+    --gris-clair: #e5e5e5;
+    --gris-moyen: #8a8a8a;
+    --rouge-erreur: #c0392b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: var(--blanc);
+    color: var(--noir);
+}
+
+a {
+    color: inherit;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.header {
+    text-align: center;
+    padding: 40px 20px 32px 20px;
+    border-bottom: 1px solid var(--gris-clair);
+}
+
+.header h1 {
+    font-size: 34px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0 0 12px 0;
+}
+
+.bienvenue {
+    font-size: 14px;
+    color: var(--gris-moyen);
+    margin: 0 0 20px 0;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    margin: 0 6px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border: 1.5px solid var(--noir);
+    transition: all 0.3s ease;
+}
+
+.btn-ajout,
+.btn-connexion {
+    background: var(--noir);
+    color: var(--blanc);
+}
+
+.btn-ajout:hover,
+.btn-connexion:hover {
+    background: transparent;
+    color: var(--noir);
+}
+
+.btn-deconnexion {
+    background: transparent;
+    color: var(--noir);
+}
+
+.btn-deconnexion:hover {
+    background: var(--noir);
+    color: var(--blanc);
+}
+
+/* ============================================
+   GRILLE DE PRODUITS (accueil)
+   ============================================ */
+.grille-produits {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 32px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.carte-produit {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--gris-clair);
+}
+
+.lien-carte {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.carte-produit img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: var(--gris-tres-clair);
+}
+
+.carte-produit h3 {
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 16px 16px 4px 16px;
+}
+
+.carte-produit .description {
+    font-size: 13px;
+    color: var(--gris-moyen);
+    margin: 0 16px 8px 16px;
+    line-height: 1.5;
+    display: -webkit-box;
+   
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.carte-produit .prix {
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 16px 16px 16px;
+}
+
+.aucun-produit {
+    text-align: center;
+    color: var(--gris-moyen);
+    font-size: 15px;
+    grid-column: 1 / -1;
+    padding: 60px 0;
+}
+
+/* ============================================
+   BOUTON WHATSAPP (générique)
+   ============================================ */
+.btn-whatsapp {
+    display: block;
+    text-align: center;
+    margin: 0 16px 16px 16px;
+    padding: 12px;
+    background: var(--noir);
+    color: var(--blanc);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1.5px solid var(--noir);
+    transition: all 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+    background: transparent;
+    color: var(--noir);
+}
+
+/* ============================================
+   PAGE PRODUIT (détail)
+   ============================================ */
+.page-produit {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.page-produit .galerie-images {
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.page-produit .galerie-images img,
+.page-produit > img {
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: var(--gris-tres-clair);
+}
+
+.page-produit h2 {
+    font-size: 24px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 8px 0;
+}
+
+.page-produit .description {
+    font-size: 14px;
+    color: var(--gris-moyen);
+    line-height: 1.6;
+    margin: 8px 0 16px 0;
+}
+
+.page-produit .prix {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 12px 0 24px 0;
+}
+
+.page-produit .btn-whatsapp {
+    display: inline-block;
+    margin: 0 6px 12px 6px;
+    padding: 14px 40px;
+}
+
+/* ============================================
+   FORMULAIRES (login, signup, ajouter/modifier produit)
+   ============================================ */
+.formulaire {
+    max-width: 420px;
+    margin: 60px auto;
+    padding: 32px;
+    border: 1px solid var(--gris-clair);
+}
+
+.formulaire h1 {
+    text-align: center;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 4px 0;
+}
+
+.formulaire h2 {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 24px 0;
+    color: var(--gris-moyen);
+}
+
+.champ {
+    margin-bottom: 18px;
+}
+
+.champ label {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.champ input,
+.champ textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--gris-clair);
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--blanc);
+    color: var(--noir);
+}
+
+.champ input:focus,
+.champ textarea:focus {
+    outline: none;
+    border-color: var(--noir);
+}
+
+.champ textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.formulaire button {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    background: var(--noir);
+    color: var(--blanc);
+    border: 1.5px solid var(--noir);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.formulaire button:hover {
+    background: transparent;
+    color: var(--noir);
+}
+
+.message-erreur {
+    background: #fdecea;
+    color: var(--rouge-erreur);
+    border: 1px solid var(--rouge-erreur);
+    padding: 10px 14px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.lien-bas {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.lien-bas a {
+    color: var(--noir);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .btn {
+        padding: 10px 18px;
+        font-size: 11px;
+    }
+
+    .grille-produits {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 20px;
+    }
+
+    .carte-produit h3 {
+        font-size: 13px;
+    }
+}
+
+/* ============================================
+   OPTIMISATION : BOUTON MODIFIER (admin)
+   ============================================ */
+.btn-modifier {
+    display: block;
+    margin-top: 12px;
+    background-color: var(--gris-clair);
+    color: var(--noir);
+    text-decoration: none;
+    padding: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.3s;
+}
+
+.btn-modifier:hover {
+    background-color: var(--gris-moyen);
+    color: #fff;
+}

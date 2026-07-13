@@ -1,0 +1,13 @@
+# Fichiers sensibles
+ca.pem
+
+# Dossier d'upload (optionnel, mais les images seront perdues sur Render)
+# uploads/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires
+*.tmp
+*.log
