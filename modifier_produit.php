@@ -1,22 +1,3 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon Catalogue - Accueil</title>
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3FXBWCRQQR');
-    </script>
-    
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 
 
 
@@ -59,6 +40,24 @@ $images = $req_img->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>Modifier le produit</title>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3FXBWCRQQR');
+</script>
+
+
+
+
+
+
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
