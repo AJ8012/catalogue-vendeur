@@ -36,24 +36,14 @@ $images = $req_img->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>Modifier le produit</title>
-
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3FXBWCRQQR');
-</script>
-
-
-
-
-
-
-
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3FXBWCRQQR');
+    </script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -107,6 +97,13 @@ $images = $req_img->fetchAll();
 
         </form>
 
+        <!-- BOUTON SUPPRIMER (en dehors du formulaire) -->
+        <div style="margin-top: 24px; text-align: center;">
+            <a href="actions/action_supprimer_produit.php?id=<?php echo $id_produit; ?>" 
+               class="btn-supprimer" 
+               onclick="return confirm('Supprimer définitivement ce produit et toutes ses images ?')">🗑️ Supprimer ce produit</a>
+        </div>
+
         <div class="lien-bas">
             <a href="index.php">Annuler et retourner à l'accueil</a>
         </div>
@@ -151,7 +148,6 @@ $images = $req_img->fetchAll();
                     btn.style.textAlign = 'center';
                     btn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        // Retirer du DataTransfer
                         const dt = new DataTransfer();
                         const current = Array.from(inputNew.files);
                         const filtered = current.filter((f, i) => i !== idx);
