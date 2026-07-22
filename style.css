@@ -1,254 +1,360 @@
 /* ============================================
-   FONTS LUXE (Cormorant Garamond + Inter)
+   CATALOGUE VENDEUR — Direction artistique
+   "L'étal de nuit" : le fond sombre est l'étal du
+   marché à la tombée du jour. Chaque produit est une
+   étiquette en papier kraft épinglée dessus — d'où le
+   petit trou en haut de chaque carte, comme une vraie
+   étiquette de prix qu'on accroche avec une ficelle.
    ============================================ */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap");
 
 /* ============================================
-   VARIABLES – PALETTE HAUTE COUTURE
+   JETONS DE DESIGN
    ============================================ */
 :root {
-    /* Fonds */
-    --color-bg-dark: #0D0D0D;
-    --color-bg-card: #161616;
-    --color-bg-soft: #1A1A1A;
-    
-    /* Textes */
-    --color-text-light: #E8E4DF;
-    --color-text-muted: #A8A4A0;
-    --color-text-gold: #C5A059;
-    
-    /* Ors */
-    --color-gold: #C5A059;
-    --color-gold-hover: #D4AF37;
-    --color-border-gold: rgba(197, 160, 89, 0.35);
-    
-    /* Bordures */
-    --color-border-dark: #2A2A2A;
-    
-    /* Typo */
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Inter', -apple-system, sans-serif;
-    
-    /* Transitions */
-    --transition-slow: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    --transition-fast: all 0.3s ease;
-    
-    /* Ombres */
-    --shadow-luxe: 0 20px 40px rgba(0, 0, 0, 0.6);
+    /* Couleurs */
+    --nuit: #1a1613;         /* fond de page — l'étal à la nuit tombée */
+    --nuit-2: #241e19;        /* panneau légèrement plus clair (header) */
+    --tag: #f1e6cc;          /* papier kraft — cartes produit, formulaires */
+    --tag-2: #e6d6ac;         /* papier kraft plus soutenu (hover, chips) */
+    --braise: #e8a33d;        /* ambre vif — focus, accents sur fond sombre */
+    --braise-dark: #8a5419;   /* ambre profond — texte/liens sur papier clair */
+    --jade: #3fa57a;          /* vert — réservé à l'action WhatsApp */
+    --jade-dark: #2e7f5e;
+    --encre: #221b12;         /* texte sur papier */
+    --fume: #beb09a;          /* texte secondaire sur fond sombre */
+    --fume-2: #6b5f49;        /* texte secondaire sur papier */
+    --erreur: #c0392b;
+    --erreur-bg: #f6dcd3;
+
+    --ligne: rgba(241, 230, 204, 0.14);  /* liserés sur fond sombre */
+    --ligne-tag: #d9c69c;                 /* liserés sur papier */
+
+    /* Typographie : titre caractériel + corps neutre + mono "ticket de caisse" */
+    --police-titre: "Fraunces", Georgia, serif;
+    --police-mono: "Space Mono", "Courier New", monospace;
+    --police-corps: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    /* Rayons + ombres */
+    --r-sm: 6px;
+    --r-md: 10px;
+    --r-lg: 18px;
+    --ombre-tag: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 30px -12px rgba(0, 0, 0, .55);
+    --ombre-tag-hover: 0 2px 4px rgba(0, 0, 0, .4), 0 22px 40px -14px rgba(0, 0, 0, .6);
 }
 
 /* ============================================
    RESET & BASE
    ============================================ */
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-light);
-    font-family: var(--font-sans);
-    font-weight: 300;
-    line-height: 1.7;
+    margin: 0;
+    font-family: var(--police-corps);
+    color: var(--fume);
+    background-color: var(--nuit);
+    background-image: radial-gradient(ellipse 70% 45% at 50% -8%, rgba(232, 163, 61, .10), transparent 60%);
+    background-repeat: no-repeat;
     -webkit-font-smoothing: antialiased;
-    padding: 0 20px;
 }
 
 a {
-    text-decoration: none;
     color: inherit;
 }
 
-img {
-    max-width: 100%;
-    display: block;
+::selection {
+    background: var(--braise);
+    color: var(--nuit);
 }
 
-/* Titres serif */
-h1, h2, h3, .font-serif {
-    font-family: var(--font-serif);
-    font-weight: 300;
-    letter-spacing: 0.02em;
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--nuit);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3a322a;
+    border-radius: 8px;
+    border: 3px solid var(--nuit);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4a4038;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--braise);
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 /* ============================================
-   HEADER – NAVIGATION VERRÉE
+   EN-TÊTE
    ============================================ */
 .header {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 24px 0 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--color-border-dark);
-    position: sticky;
-    top: 0;
-    background: rgba(13, 13, 13, 0.85);
-    backdrop-filter: blur(12px);
-    z-index: 1000;
-    transition: var(--transition-smooth);
+    text-align: center;
+    padding: 44px 20px 34px;
+    background: var(--nuit-2);
+    border-bottom: 1px solid var(--ligne);
 }
 
 .header h1 {
-    font-size: 28px;
-    font-weight: 300;
-    letter-spacing: 0.12em;
+    font-family: var(--police-titre);
+    font-size: 36px;
+    font-weight: 600;
     text-transform: uppercase;
-    background: linear-gradient(135deg, var(--color-text-light), var(--color-gold));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 0;
+    letter-spacing: 3px;
+    color: var(--tag);
+    margin: 0 0 14px;
 }
 
-.header .bienvenue {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    letter-spacing: 0.05em;
-    margin: 0 12px 0 0;
-}
-
-.header .btn-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    align-items: center;
-}
-
-/* BOUTONS GÉNÉRAUX */
-.btn {
-    display: inline-block;
-    padding: 10px 24px;
+.bienvenue {
+    font-family: var(--police-mono);
     font-size: 12px;
-    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.15em;
-    border-radius: 0;
-    border: 1px solid var(--color-border-dark);
-    background: transparent;
-    color: var(--color-text-light);
-    transition: var(--transition-smooth);
-    cursor: pointer;
-}
-
-.btn:hover {
-    background: var(--color-gold);
-    color: var(--color-bg-dark);
-    border-color: var(--color-gold);
-}
-
-.btn-primary {
-    background: var(--color-gold);
-    color: var(--color-bg-dark);
-    border-color: var(--color-gold);
-}
-.btn-primary:hover {
-    background: var(--color-gold-hover);
-    border-color: var(--color-gold-hover);
-}
-
-.btn-outline {
-    border-color: var(--color-border-gold);
-    color: var(--color-gold);
-}
-.btn-outline:hover {
-    background: var(--color-gold);
-    color: var(--color-bg-dark);
-}
-
-.btn-whatsapp {
-    background: transparent;
-    border: 1px solid var(--color-border-gold);
-    color: var(--color-gold);
-    padding: 10px 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: var(--transition-smooth);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 12px;
-}
-.btn-whatsapp:hover {
-    background: var(--color-gold);
-    color: var(--color-bg-dark);
-    border-color: var(--color-gold);
+    letter-spacing: 1px;
+    color: var(--fume);
+    opacity: .85;
+    margin: 0 0 22px;
 }
 
 /* ============================================
-   GRILLE PRODUITS – HAUTE COUTURE
+   BOUTONS
+   ============================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 26px;
+    margin: 0 6px;
+    text-decoration: none;
+    font-family: var(--police-corps);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: var(--r-sm);
+    border: 1.5px solid var(--ligne);
+    color: var(--fume);
+    background: transparent;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease,
+                color .18s ease, border-color .18s ease;
+}
+
+.btn:hover {
+    border-color: var(--tag);
+    color: var(--tag);
+    transform: translateY(-2px);
+}
+
+.btn-ajout,
+.btn-connexion {
+    background: var(--braise);
+    color: var(--nuit);
+    border-color: var(--braise);
+}
+
+.btn-ajout:hover,
+.btn-connexion:hover {
+    background: var(--tag);
+    border-color: var(--tag);
+    color: var(--nuit);
+    box-shadow: 0 10px 24px -8px rgba(232, 163, 61, .5);
+}
+
+.btn-deconnexion {
+    background: transparent;
+    color: var(--fume);
+    border-color: var(--ligne);
+}
+
+.btn-deconnexion:hover {
+    background: var(--tag);
+    color: var(--nuit);
+    border-color: var(--tag);
+}
+
+.btn-modifier {
+    display: block;
+    margin-top: 12px;
+    background: transparent;
+    color: var(--fume-2);
+    text-decoration: none;
+    text-align: center;
+    padding: 8px;
+    font-family: var(--police-corps);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1.5px dashed var(--ligne-tag);
+    border-radius: var(--r-sm);
+    transition: background .2s ease, color .2s ease;
+}
+
+.btn-modifier:hover {
+    background: var(--tag-2);
+    color: var(--encre);
+}
+
+/* Bouton "Commander sur WhatsApp" : ciblé par le lien wa.me lui-même,
+   pas seulement par une classe — il reste vert peu importe qu'il porte
+   .btn-whatsapp (index.php) ou .btn.btn-ajout (produit.php). */
+a[href^="https://wa.me/"] {
+    background: var(--jade);
+    border-color: var(--jade);
+    color: #fff;
+}
+
+a[href^="https://wa.me/"]:hover {
+    background: var(--jade-dark);
+    border-color: var(--jade-dark);
+    color: #fff;
+    box-shadow: 0 10px 24px -8px rgba(63, 165, 122, .45);
+}
+
+.btn-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    margin: 0 16px 16px;
+    padding: 13px;
+    text-decoration: none;
+    font-family: var(--police-corps);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: var(--r-sm);
+    border: 1.5px solid var(--ligne-tag);
+    color: var(--encre);
+    background: transparent;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.btn-whatsapp:hover {
+    background: var(--tag-2);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   GRILLE DE PRODUITS
    ============================================ */
 .grille-produits {
-    max-width: 1280px;
-    margin: 48px auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 40px 32px;
+    padding: 48px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .carte-produit {
-    background-color: var(--color-bg-card);
-    border: 1px solid var(--color-border-dark);
-    transition: var(--transition-slow);
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
+    background: var(--tag);
+    color: var(--encre);
+    border-radius: var(--r-md);
+    box-shadow: var(--ombre-tag);
+    overflow: hidden;
+    animation: apparition .5s ease-out both;
+    transition: transform .25s ease, box-shadow .25s ease;
 }
 
 .carte-produit:hover {
-    border-color: var(--color-border-gold);
-    box-shadow: var(--shadow-luxe);
     transform: translateY(-6px);
+    box-shadow: var(--ombre-tag-hover);
 }
 
-.carte-produit .lien-carte {
+/* Le trou de l'étiquette, comme épinglée à l'étal */
+.carte-produit::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
+    background: var(--nuit);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .4);
+    z-index: 2;
+}
+
+.carte-produit:nth-child(1) { animation-delay: .02s; }
+.carte-produit:nth-child(2) { animation-delay: .07s; }
+.carte-produit:nth-child(3) { animation-delay: .12s; }
+.carte-produit:nth-child(4) { animation-delay: .17s; }
+.carte-produit:nth-child(5) { animation-delay: .22s; }
+.carte-produit:nth-child(6) { animation-delay: .27s; }
+.carte-produit:nth-child(n+7) { animation-delay: .3s; }
+
+@keyframes apparition {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.lien-carte {
+    text-decoration: none;
+    color: inherit;
     display: flex;
     flex-direction: column;
     flex: 1;
-    text-decoration: none;
-    color: inherit;
 }
 
-/* Conteneur image avec ratio 4:5 */
-.carte-produit .lien-carte > *:first-child {
-    position: relative;
+.carte-produit img {
     width: 100%;
-    padding-top: 125%; /* 4:5 */
-    overflow: hidden;
-    background: var(--color-bg-soft);
-}
-
-.carte-produit .lien-carte img {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background: var(--tag-2);
+    filter: grayscale(.15) contrast(.97);
+    transition: transform .5s ease, filter .4s ease;
 }
 
-.carte-produit:hover .lien-carte img {
-    transform: scale(1.06);
+.carte-produit:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0) contrast(1);
 }
 
-/* Titre et description */
 .carte-produit h3 {
-    font-family: var(--font-serif);
-    font-weight: 300;
-    font-size: 1.3rem;
-    letter-spacing: 0.02em;
-    margin: 20px 20px 6px;
-    color: var(--color-text-light);
+    font-family: var(--police-titre);
+    font-size: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--encre);
+    margin: 18px 16px 4px;
 }
 
 .carte-produit .description {
-    font-size: 14px;
-    color: var(--color-text-muted);
-    margin: 0 20px 8px;
-    line-height: 1.6;
+    font-size: 13px;
+    color: var(--fume-2);
+    margin: 0 16px 10px;
+    line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -256,308 +362,302 @@ h1, h2, h3, .font-serif {
 }
 
 .carte-produit .prix {
-    font-size: 1.1rem;
-    color: var(--color-gold);
-    margin: 4px 20px 16px;
-    font-weight: 300;
-}
-
-/* Bouton "Commander" dans la carte */
-.btn-product-order {
-    display: block;
-    margin: 0 20px 20px;
-    padding: 12px 0;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--color-text-light);
-    background: transparent;
-    border: 1px solid var(--color-border-dark);
-    transition: var(--transition-smooth);
-    cursor: pointer;
-    text-align: center;
-    width: auto;
-}
-
-.btn-product-order:hover {
-    background: var(--color-gold);
-    border-color: var(--color-gold);
-    color: var(--color-bg-dark);
-}
-
-/* Badge sur l'image (optionnel) */
-.product-badge {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    padding: 4px 10px;
-    border: 1px solid var(--color-border-gold);
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(4px);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    z-index: 5;
+    font-family: var(--police-mono);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--braise-dark);
+    letter-spacing: .5px;
+    margin: 0 16px 16px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--ligne-tag);
 }
 
 .aucun-produit {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 80px 20px;
-    color: var(--color-text-muted);
-    font-size: 18px;
-    letter-spacing: 0.05em;
+    color: var(--fume);
+    font-family: var(--police-mono);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 70px 30px;
+    border: 1.5px dashed var(--ligne);
+    border-radius: var(--r-lg);
 }
 
 /* ============================================
-   PAGE PRODUIT (DÉTAIL)
+   PAGE PRODUIT (détail) — la grande étiquette
    ============================================ */
 .page-produit {
-    max-width: 720px;
+    position: relative;
+    max-width: 600px;
     margin: 48px auto;
-    padding: 40px;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border-dark);
+    padding: 40px 28px 32px;
     text-align: center;
+    background: var(--tag);
+    color: var(--encre);
+    border-radius: var(--r-lg);
+    box-shadow: var(--ombre-tag);
+}
+
+.page-produit::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 14px;
+    background: var(--nuit);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .4);
 }
 
 .page-produit .galerie-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
     justify-content: center;
-    margin-bottom: 28px;
+    margin: 8px 0 24px;
 }
 
 .page-produit .galerie-images img,
 .page-produit > img {
-    width: 160px;
-    height: 160px;
+    width: 100%;
+    max-width: 320px;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    border: 1px solid var(--color-border-dark);
-    transition: var(--transition-smooth);
-}
-
-.page-produit .galerie-images img:hover {
-    border-color: var(--color-border-gold);
-    transform: scale(1.04);
+    background: var(--tag-2);
+    border-radius: var(--r-md);
+    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .35);
 }
 
 .page-produit h2 {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    font-weight: 300;
-    letter-spacing: 0.02em;
-    margin: 12px 0 8px;
+    font-family: var(--police-titre);
+    font-size: 27px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 8px 0;
 }
 
 .page-produit .description {
-    font-size: 16px;
-    color: var(--color-text-muted);
-    line-height: 1.8;
-    margin: 8px 0 20px;
-    text-align: left;
+    font-size: 14px;
+    color: var(--fume-2);
+    line-height: 1.7;
+    margin: 8px 0 18px;
 }
 
 .page-produit .prix {
-    font-size: 1.8rem;
-    color: var(--color-gold);
-    margin: 12px 0 28px;
+    display: inline-block;
+    font-family: var(--police-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--braise-dark);
+    margin: 8px 0 26px;
+    padding: 8px 0;
+    border-top: 1px dashed var(--ligne-tag);
+    border-bottom: 1px dashed var(--ligne-tag);
 }
 
-.page-produit .btn {
-    margin: 6px 8px;
+/* Le CTA WhatsApp sur cette page porte .btn.btn-ajout dans le HTML actuel :
+   on l'agrandit un peu ici pour qu'il domine comme action principale. */
+.page-produit .btn-ajout,
+.page-produit a[href^="https://wa.me/"] {
+    padding: 16px 44px;
+    margin: 0 6px 12px;
 }
 
 /* ============================================
-   FORMULAIRES (Login, Inscription, Ajout/Modif)
+   FORMULAIRES (login, signup, ajouter/modifier produit)
    ============================================ */
 .formulaire {
-    max-width: 460px;
+    max-width: 440px;
     margin: 60px auto;
-    padding: 44px 32px;
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-border-dark);
+    padding: 36px 32px;
+    background: var(--tag);
+    color: var(--encre);
+    border-radius: var(--r-lg);
+    box-shadow: var(--ombre-tag);
 }
 
-.formulaire h1,
-.formulaire h2 {
-    font-family: var(--font-serif);
-    font-weight: 300;
-    text-align: center;
-    letter-spacing: 0.04em;
-}
 .formulaire h1 {
-    font-size: 28px;
-    color: var(--color-text-light);
-    margin-bottom: 4px;
+    font-family: var(--police-titre);
+    text-align: center;
+    font-size: 23px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--encre);
+    margin: 0 0 4px;
 }
+
 .formulaire h2 {
-    font-size: 20px;
-    color: var(--color-text-muted);
-    margin-bottom: 28px;
+    font-family: var(--police-titre);
+    text-align: center;
+    font-size: 19px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--fume-2);
+    margin: 0 0 26px;
 }
 
 .champ {
-    margin-bottom: 22px;
+    margin-bottom: 18px;
 }
+
 .champ label {
     display: block;
-    font-size: 12px;
+    font-family: var(--police-mono);
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--color-text-muted);
-    margin-bottom: 6px;
+    letter-spacing: .5px;
+    color: var(--fume-2);
+    margin-bottom: 7px;
 }
+
 .champ input,
 .champ textarea {
     width: 100%;
-    padding: 12px 16px;
-    background: var(--color-bg-dark);
-    border: 1px solid var(--color-border-dark);
-    color: var(--color-text-light);
-    font-family: var(--font-sans);
-    font-size: 15px;
-    transition: var(--transition-fast);
+    padding: 11px 13px;
+    border: 1.5px solid var(--ligne-tag);
+    border-radius: var(--r-sm);
+    font-size: 14px;
+    font-family: var(--police-corps);
+    background: #fbf5e7;
+    color: var(--encre);
+    transition: border-color .18s ease, box-shadow .18s ease;
 }
+
+.champ input::placeholder,
+.champ textarea::placeholder {
+    color: var(--fume-2);
+    opacity: .7;
+}
+
 .champ input:focus,
 .champ textarea:focus {
     outline: none;
-    border-color: var(--color-border-gold);
-    background: #1A1A1A;
+    border-color: var(--braise);
+    box-shadow: 0 0 0 3px rgba(232, 163, 61, .25);
 }
+
 .champ textarea {
-    min-height: 100px;
+    min-height: 90px;
     resize: vertical;
 }
 
-.formulaire button[type="submit"] {
-    width: 100%;
-    padding: 14px;
-    background: transparent;
-    border: 1px solid var(--color-border-gold);
-    color: var(--color-gold);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+input[type="file"] {
+    font-family: var(--police-corps);
     font-size: 13px;
-    cursor: pointer;
-    transition: var(--transition-smooth);
-    margin-top: 8px;
+    color: var(--fume-2);
 }
-.formulaire button[type="submit"]:hover {
-    background: var(--color-gold);
-    color: var(--color-bg-dark);
+
+input[type="file"]::file-selector-button,
+input[type="file"]::-webkit-file-upload-button {
+    padding: 9px 18px;
+    margin-right: 12px;
+    border-radius: var(--r-sm);
+    border: 1.5px solid var(--braise-dark);
+    background: transparent;
+    color: var(--braise-dark);
+    font-family: var(--police-corps);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease;
+}
+
+input[type="file"]::file-selector-button:hover,
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: var(--braise-dark);
+    color: #fff;
+}
+
+.formulaire button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background: var(--braise);
+    color: var(--nuit);
+    border: 1.5px solid var(--braise);
+    border-radius: var(--r-sm);
+    font-family: var(--police-corps);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.formulaire button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px -10px rgba(232, 163, 61, .5);
 }
 
 .message-erreur {
-    background: rgba(255, 0, 0, 0.08);
-    border: 1px solid #8B3A3A;
-    padding: 12px 16px;
-    color: #D48B8B;
-    font-size: 14px;
-    margin-bottom: 20px;
+    background: var(--erreur-bg);
+    color: var(--erreur);
+    border: 1px solid var(--erreur);
+    border-radius: var(--r-sm);
+    padding: 11px 14px;
+    font-size: 13px;
+    margin-bottom: 18px;
 }
 
 .lien-bas {
     text-align: center;
-    margin-top: 24px;
-    font-size: 14px;
-    color: var(--color-text-muted);
-}
-.lien-bas a {
-    color: var(--color-gold);
-    border-bottom: 1px solid transparent;
-    transition: var(--transition-fast);
-}
-.lien-bas a:hover {
-    border-bottom-color: var(--color-gold);
+    margin-top: 22px;
+    font-size: 13px;
+    color: var(--fume-2);
 }
 
-/* ============================================
-   BOUTON WHATSAPP FLOTTANT (fixe en bas à droite)
-   ============================================ */
-.floating-wa-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 68px;
-    height: 68px;
-    border-radius: 50%;
-    border: 1px solid var(--color-border-gold);
-    background: rgba(18, 18, 18, 0.85);
-    backdrop-filter: blur(8px);
-    color: var(--color-gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    transition: var(--transition-smooth);
-    z-index: 999;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    text-decoration: none;
-}
-.floating-wa-btn:hover {
-    background: var(--color-gold);
-    color: var(--color-bg-dark);
-    transform: scale(1.10);
+.lien-bas a {
+    color: var(--braise-dark);
+    font-weight: 700;
+    text-decoration: underline;
 }
 
 /* ============================================
    RESPONSIVE
    ============================================ */
-@media (max-width: 768px) {
-    body {
-        padding: 0 12px;
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 25px;
+        letter-spacing: 2px;
     }
-    .header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
-        text-align: center;
-        padding: 16px 0;
+
+    .btn {
+        padding: 10px 18px;
+        font-size: 11px;
+        margin: 4px;
     }
-    .header .btn-group {
-        justify-content: center;
-    }
+
     .grille-produits {
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
-    }
-    .carte-produit h3 {
-        font-size: 1.1rem;
-    }
-    .page-produit {
-        padding: 24px;
-    }
-    .page-produit .galerie-images img {
-        width: 120px;
-        height: 120px;
-    }
-    .formulaire {
+        gap: 18px 14px;
         padding: 24px 16px;
-        margin: 30px auto;
     }
-    .floating-wa-btn {
-        width: 56px;
-        height: 56px;
-        bottom: 20px;
-        right: 20px;
-        font-size: 10px;
+
+    .carte-produit h3 {
+        font-size: 13px;
+    }
+
+    .page-produit,
+    .formulaire {
+        margin: 30px auto;
+        padding: 26px 18px;
+    }
+
+    .page-produit .prix {
+        font-size: 21px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 380px) {
     .grille-produits {
         grid-template-columns: 1fr;
-    }
-    .header h1 {
-        font-size: 22px;
-    }
-    .btn {
-        font-size: 10px;
-        padding: 8px 16px;
     }
 }
