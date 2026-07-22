@@ -5,6 +5,9 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require(__DIR__ . '/../database.php');
+require(__DIR__ . '/../vendor/autoload.php');  // ← Ajout important
+
+use Cloudinary\Cloudinary;
 
 if (empty($_SESSION['id']) || empty($_GET['id'])) {
     header('Location: ../login.php');
@@ -33,7 +36,15 @@ $prix = !empty($_POST['prix']) ? floatval($_POST['prix']) : null;
 $update = $bdd->prepare('UPDATE produits SET nom = ?, description = ?, prix = ? WHERE id = ?');
 $update->execute([$nom, $description, $prix, $id_produit]);
 
-// Gestion des nouvelles images
+// ----- Configuration Cloudinary -----
+$cloudinary = new Cloudinary([
+    'cloud' => [
+        'cloud_name' => getenv('CLOUDINARY_CLOUD_NAME') ?: 'yme18tjv',
+        'api_key'    => getenv('CLOUDINARY_API_KEY') ?: '193269622434582',
+        'api_secret' => getenv('CLOUDINARY_API_SECRET') ?: 'FQGu7ePvtNecUV187T5Qt8uuQyU',
+    ],
+]);
+
 // Gestion des nouvelles images avec Cloudinary
 if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
     $files = $_FILES['new_images'];
@@ -53,5 +64,7 @@ if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
             $_SESSION['erreur'] = "Erreur lors de l'upload : " . $e->getMessage();
         }
     }
-    
 }
+
+header('Location: ../index.php');
+exit();
