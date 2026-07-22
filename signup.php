@@ -8,25 +8,14 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CATALOGUE - Inscription</title>
 
-
-
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3FXBWCRQQR');
-</script>
-
-
-
-
-
-
-
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3FXBWCRQQR');
+    </script>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -35,36 +24,31 @@ session_start();
     <div class="formulaire">
         <h2>Créer un compte</h2>
 
+        <?php
+        if (!empty($_SESSION['id'])) {
+            header('Location: index.php');
+            exit();
+        }
 
-<?php
-if (!empty($_SESSION['id'])) {
-    header('Location: index.php');
-    exit();
-}
-
-
-
-
-
-        if(!empty($_SESSION['erreur'])): ?>
-            <p class=\"message-erreur\"><?php echo $_SESSION['erreur']; ?></p>
+        if (!empty($_SESSION['erreur'])): ?>
+            <p class="message-erreur"><?php echo $_SESSION['erreur']; ?></p>
             <?php unset($_SESSION['erreur']); ?>
         <?php endif; ?>
 
         <form action="actions/action_signup.php" method="POST">
             <div class="champ">
                 <label>Nom complet :</label>
-                <input type="text" name="nom" placeholder="The Rock">
+                <input type="text" name="nom" placeholder="The Rock" required>
             </div>
 
             <div class="champ">
                 <label>Numéro de téléphone (8 chiffres) :</label>
-                <input type="tel" name="telephone" pattern="[0-9]{8}" maxlength="8" placeholder="12345678" required>
+                <input type="tel" name="telephone" pattern="[0-9]{8}" maxlength="8" placeholder="+222" required>
             </div>
 
             <div class="champ">
-                <label>Mot de passe :</label>
-                <input type="password" name="mdp" placeholder="Choisissez un mot de passe">
+                <label>Mot de passe (4 chiffres) :</label>
+                <input type="password" name="mdp" pattern="[0-9]{4}" maxlength="4" placeholder="4 chiffres" required>
             </div>
 
             <button type="submit">S'inscrire</button>
