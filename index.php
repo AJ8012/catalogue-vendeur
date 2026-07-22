@@ -1,3 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Catalogue - Accueil</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3FXBWCRQQR');
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+
+
 <?php
 session_start();
 
@@ -45,8 +67,8 @@ $recup_produits->execute();
         <h1>Catalogue Vendeur</h1>
         
         <?php if (!empty($_SESSION['id'])): ?>
-            <p class="bienvenue">👋 Mode Admin : Bonjour <?php echo htmlspecialchars($_SESSION['nom']); ?></p>
-            <a href="ajouter_produit.php" class="btn btn-ajout">➕ Ajouter un produit</a>
+            <p class="bienvenue"> Tu manges couscous chaque jour ? <?php echo htmlspecialchars($_SESSION['nom']); ?></p>
+            <a href="ajouter_produit.php" class="btn btn-ajout"> Ajouter un produit</a>
             <a href="actions/action_logout.php" class="btn btn-deconnexion">Se déconnecter</a>
         <?php else: ?>
             <p class="bienvenue">✨ Bienvenue sur notre catalogue en ligne !</p>
@@ -91,13 +113,8 @@ $recup_produits->execute();
 
                 <!-- Bouton WhatsApp direct -->
              
-<a href="https://wa.me/<?php echo $produit['vendeur_telephone']; ?>?text=<?php echo $message_whatsapp; ?>" 
-   class="btn-whatsapp" target="_blank">
-   Commander sur WhatsApp
-</a>
 
-
-
+<a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '12345678'; ?>" target="_blank" class="floating-wa-btn">Message</a>
 
 
 

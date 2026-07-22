@@ -1,3 +1,27 @@
+<head>
+    <meta charset="UTF-8">
+    <title><?php echo htmlspecialchars($produit['nom']); ?> - Catalogue</title>
+    
+    <!-- Google Analytics (juste après le title, c'est parfait) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-3FXBWCRQQR');
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+
+
+
+
+
+
 <?php
 session_start();
 
@@ -93,15 +117,9 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
 
       
 
-<a href="https://wa.me/<?php echo $produit['vendeur_telephone']; ?>?text=<?php echo $message_whatsapp; ?>"
-   class="btn btn-ajout"
-   target="_blank">
-   📱 Commander sur WhatsApp
-</a>
 
 
-
-
+<a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>" target="_blank" class="floating-wa-btn">Message</a>
 
 
 

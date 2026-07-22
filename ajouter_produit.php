@@ -11,6 +11,25 @@ if (empty($_SESSION['id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un produit</title>
+
+
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-3FXBWCRQQR');
+</script>
+
+
+
+
+
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
