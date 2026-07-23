@@ -58,7 +58,8 @@ $recup_produits->execute();
             ?>
             <div class="carte-produit">
                 <a href="produit.php?id=<?php echo $produit['id']; ?>" class="lien-carte">
-                    <img src="<?php echo htmlspecialchars($produit['image'] ?? 'placeholder.png'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+                    <!-- On ajoute ?f_auto=1 à l'URL pour que Cloudinary optimise à l'affichage -->
+                    <img src="<?php echo htmlspecialchars($produit['image'] ?? 'placeholder.png') . '?f_auto=1'; ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
                     <h3><?php echo htmlspecialchars($produit['nom']); ?></h3>
                     <?php if (!empty($produit['description'])): ?>
                         <p class="description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>

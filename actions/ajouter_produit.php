@@ -23,22 +23,11 @@ if (empty($_POST['nom']) || empty($_FILES['images']) || empty($_FILES['images'][
 // Configuration Cloudinary
 $cloudinary = new Cloudinary([
     'cloud' => [
-        'cloud_name' => getenv('CLOUDINARY_CLOUD_NAME'),
-        'api_key'    => getenv('CLOUDINARY_API_KEY'),
-        'api_secret' => getenv('CLOUDINARY_API_SECRET'),
+        'cloud_name' => getenv('CLOUDINARY_CLOUD_NAME') ?: 'yme18tjv',
+        'api_key'    => getenv('CLOUDINARY_API_KEY') ?: '193269622434582',
+        'api_secret' => getenv('CLOUDINARY_API_SECRET') ?: 'FQGu7ePvtNecUV187T5Qt8uuQyU',
     ],
 ]);
-
-
-
-
-
-
-
-
-
-
-
 
 $nom = htmlspecialchars($_POST['nom']);
 $description = !empty($_POST['description']) ? htmlspecialchars($_POST['description']) : "";
@@ -50,7 +39,7 @@ $insert = $bdd->prepare('INSERT INTO produits(nom, description, prix, id_utilisa
 $insert->execute([$nom, $description, $prix, $id_vendeur]);
 $produit_id = $bdd->lastInsertId();
 
-// Upload des images vers Cloudinary
+// Upload des images vers Cloudinary avec conversion automatique
 $images = $_FILES['images'];
 $success = true;
 
@@ -60,7 +49,11 @@ for ($i = 0; $i < count($images['name']); $i++) {
     try {
         $upload = $cloudinary->uploadApi()->upload(
             $images['tmp_name'][$i],
-            ['folder' => 'catalogue']
+            [
+                'folder'       => 'catalogue',
+                'fetch_format' => 'auto',   // Choisit le meilleur format (WebP, AVIF, etc.)
+                'quality'      => 'auto',   // Optimise la qualité automatiquement
+            ]
         );
         $image_url = $upload['secure_url'];
 

@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require(__DIR__ . '/../database.php');
-require(__DIR__ . '/../vendor/autoload.php');  // ← Ajout important
+require(__DIR__ . '/../vendor/autoload.php');
 
 use Cloudinary\Cloudinary;
 
@@ -45,7 +45,7 @@ $cloudinary = new Cloudinary([
     ],
 ]);
 
-// Gestion des nouvelles images avec Cloudinary
+// Gestion des nouvelles images avec conversion automatique
 if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
     $files = $_FILES['new_images'];
     for ($i = 0; $i < count($files['name']); $i++) {
@@ -54,7 +54,11 @@ if (isset($_FILES['new_images']) && !empty($_FILES['new_images']['name'][0])) {
         try {
             $upload = $cloudinary->uploadApi()->upload(
                 $files['tmp_name'][$i],
-                ['folder' => 'catalogue']
+                [
+                    'folder'       => 'catalogue',
+                    'fetch_format' => 'auto',
+                    'quality'      => 'auto',
+                ]
             );
             $image_url = $upload['secure_url'];
 

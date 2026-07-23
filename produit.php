@@ -38,26 +38,12 @@ $images = $req_img->fetchAll();
 $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " . $produit['nom']);
 ?>
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title><?php echo htmlspecialchars($produit['nom']); ?> - Catalogue</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="header">
-        <h1>Catalogue Vendeur</h1>
-
-
-
-          
-    <!-- Google Analytics (juste après le title, c'est parfait) -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -65,15 +51,12 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         gtag('js', new Date());
         gtag('config', 'G-3FXBWCRQQR');
     </script>
-    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-
-
-
-
-
-
-
+    <div class="header">
+        <h1>Catalogue Vendeur</h1>
         <a href="index.php" class="btn">⬅ Retour à l'accueil</a>
     </div>
 
@@ -81,23 +64,11 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         <?php if (!empty($images)): ?>
             <div class="galerie-images" style="display:flex; flex-wrap:wrap; gap:10px;">
                 <?php foreach ($images as $img): ?>
-
-
-
-
-
-                    <img src="<?php echo htmlspecialchars($img['image']); ?>"
-
-
-
-
-                    
-                         alt="<?php echo htmlspecialchars($produit['nom']); ?>"
-                         style="max-width:200px; height:auto;">
+                    <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>" style="max-width:200px; height:auto;">
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <img src="uploads/placeholder.png" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+            <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
         <?php endif; ?>
 
         <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
@@ -112,25 +83,10 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
             <p class="prix">Prix sur demande</p>
         <?php endif; ?>
 
-      
-
-
-
-<a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>" target="_blank" class="floating-wa-btn">Message</a>
-
-
-
-
-
-
-
-
-
+        <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>" target="_blank" class="btn btn-ajout">📱 Commander sur WhatsApp</a>
 
         <?php if (!empty($_SESSION['id'])): ?>
-            <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn btn-deconnexion">
-                Modifier ce produit
-            </a>
+            <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn btn-deconnexion">Modifier ce produit</a>
         <?php endif; ?>
     </div>
 
