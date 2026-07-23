@@ -62,13 +62,13 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
 
     <div class="page-produit">
         <?php if (!empty($images)): ?>
-            <div class="galerie-images" style="display:flex; flex-wrap:wrap; gap:10px;">
+            <div class="galerie-images" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
                 <?php foreach ($images as $img): ?>
-                    <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>" style="max-width:200px; height:auto;">
+                    <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>" style="max-width:200px; height:auto; cursor:pointer; border-radius:8px;">
                 <?php endforeach; ?>
             </div>
         <?php else: ?>
-            <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+            <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>" style="cursor:pointer;">
         <?php endif; ?>
 
         <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
@@ -90,5 +90,64 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         <?php endif; ?>
     </div>
 
+    <!-- LIGHTBOX -->
+    <div id="lightbox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; cursor:pointer;">
+        <span id="lightbox-close" style="position:absolute; top:20px; right:30px; font-size:40px; color:#fff; cursor:pointer; font-weight:300; transition:transform .2s;">&times;</span>
+        <img id="lightbox-img" src="" alt="Agrandissement" style="max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 10px 40px rgba(0,0,0,0.6); cursor:default;">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeBtn = document.getElementById('lightbox-close');
+
+            // Cibler toutes les images de la galerie
+            const galleryImages = document.querySelectorAll('.galerie-images img');
+            // Si une image seule (placeholder) est utilisée
+            const mainImage = document.querySelector('.page-produit > img');
+
+            function openLightbox(src) {
+                lightboxImg.src = src;
+                lightbox.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeLightbox() {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+
+            // Écouter les clics sur les images de la galerie
+            galleryImages.forEach(img => {
+                img.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openLightbox(this.src);
+                });
+            });
+
+            // Si l'image principale existe (placeholder)
+            if (mainImage) {
+                mainImage.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openLightbox(this.src);
+                });
+            }
+
+            // Fermeture au clic sur l'overlay ou sur le bouton ×
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox || e.target === closeBtn) {
+                    closeLightbox();
+                }
+            });
+
+            // Fermeture avec la touche Échap
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+                    closeLightbox();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
