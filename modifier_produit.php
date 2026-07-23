@@ -45,6 +45,9 @@ $images = $req_img->fetchAll();
         gtag('config', 'G-3FXBWCRQQR');
     </script>
     <link rel="stylesheet" href="style.css">
+    <!-- Conversion HEIC/HEIF -> JPEG pour l'aperçu (les iPhone envoient des photos en HEIC,
+         un format que les navigateurs (hors Safari) ne savent pas afficher directement) -->
+    <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
 </head>
 <body>
 
@@ -80,7 +83,7 @@ $images = $req_img->fetchAll();
                         <div style="position:relative; width:100px; height:100px; border:1px solid #ddd; border-radius:4px; overflow:hidden;">
                             <img src="<?php echo htmlspecialchars($img['image']); ?>" style="width:100%; height:100%; object-fit:cover;">
                             <a href="actions/action_supprimer_image.php?id=<?php echo $img['id']; ?>&produit=<?php echo $id_produit; ?>" 
-                               style="position:absolute; top:2px; right:2px; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; width:24px; height:24px; text-align:center; line-height:24px; text-decoration:none; font-size:16px;"
+                               style="position:absolute; top:2px; right:2px; display:flex; align-items:center; justify-content:center; box-sizing:border-box; padding:0; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; width:24px; height:24px; text-decoration:none; font-size:16px; line-height:1;"
                                onclick="return confirm('Supprimer cette image ?')">×</a>
                         </div>
                     <?php endforeach; ?>
@@ -113,53 +116,94 @@ $images = $req_img->fetchAll();
         const inputNew = document.querySelector('input[name="new_images[]"]');
         const previewNew = document.getElementById('preview-new');
 
+        // Un fichier est-il au format HEIC/HEIF (photos iPhone) ?
+        function isHeic(file) {
+            const name = (file.name || '').toLowerCase();
+            return file.type === 'image/heic' || file.type === 'image/heif' ||
+                   name.endsWith('.heic') || name.endsWith('.heif');
+        }
+
         inputNew.addEventListener('change', function() {
             previewNew.innerHTML = '';
             const files = Array.from(this.files);
             files.forEach((file, idx) => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const div = document.createElement('div');
-                    div.style.position = 'relative';
-                    div.style.width = '100px';
-                    div.style.height = '100px';
-                    div.style.overflow = 'hidden';
-                    div.style.border = '1px solid #ddd';
-                    div.style.borderRadius = '4px';
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.width = '100%';
-                    img.style.height = '100%';
-                    img.style.objectFit = 'cover';
-                    const btn = document.createElement('button');
-                    btn.textContent = '×';
-                    btn.style.position = 'absolute';
-                    btn.style.top = '2px';
-                    btn.style.right = '2px';
-                    btn.style.background = 'rgba(0,0,0,0.6)';
-                    btn.style.color = '#fff';
-                    btn.style.border = 'none';
-                    btn.style.borderRadius = '50%';
-                    btn.style.width = '24px';
-                    btn.style.height = '24px';
-                    btn.style.cursor = 'pointer';
-                    btn.style.fontSize = '16px';
-                    btn.style.lineHeight = '24px';
-                    btn.style.textAlign = 'center';
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const dt = new DataTransfer();
-                        const current = Array.from(inputNew.files);
-                        const filtered = current.filter((f, i) => i !== idx);
-                        filtered.forEach(f => dt.items.add(f));
-                        inputNew.files = dt.files;
-                        div.remove();
-                    });
-                    div.appendChild(img);
-                    div.appendChild(btn);
-                    previewNew.appendChild(div);
-                };
-                reader.readAsDataURL(file);
+                const div = document.createElement('div');
+                div.style.position = 'relative';
+                div.style.width = '100px';
+                div.style.height = '100px';
+                div.style.overflow = 'hidden';
+                div.style.border = '1px solid #ddd';
+                div.style.borderRadius = '4px';
+                div.style.background = '#f0ece0';
+
+                const img = document.createElement('img');
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover';
+                div.appendChild(img);
+
+                // Petit indicateur "conversion en cours" pendant la génération de l'aperçu HEIC
+                const loading = document.createElement('div');
+                loading.textContent = 'HEIC…';
+                loading.style.position = 'absolute';
+                loading.style.inset = '0';
+                loading.style.display = 'flex';
+                loading.style.alignItems = 'center';
+                loading.style.justifyContent = 'center';
+                loading.style.fontSize = '12px';
+                loading.style.color = '#6b5f49';
+
+                // Bouton de suppression (centré via flexbox, pas via line-height)
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.textContent = '×';
+                btn.style.position = 'absolute';
+                btn.style.top = '2px';
+                btn.style.right = '2px';
+                btn.style.width = '22px';
+                btn.style.height = '22px';
+                btn.style.padding = '0';
+                btn.style.margin = '0';
+                btn.style.boxSizing = 'border-box';
+                btn.style.display = 'flex';
+                btn.style.alignItems = 'center';
+                btn.style.justifyContent = 'center';
+                btn.style.background = 'rgba(0,0,0,0.6)';
+                btn.style.color = '#fff';
+                btn.style.border = 'none';
+                btn.style.borderRadius = '50%';
+                btn.style.cursor = 'pointer';
+                btn.style.fontSize = '16px';
+                btn.style.lineHeight = '1';
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dt = new DataTransfer();
+                    const current = Array.from(inputNew.files);
+                    const filtered = current.filter((f, i) => i !== idx);
+                    filtered.forEach(f => dt.items.add(f));
+                    inputNew.files = dt.files;
+                    div.remove();
+                });
+                div.appendChild(btn);
+                previewNew.appendChild(div);
+
+                if (isHeic(file)) {
+                    div.appendChild(loading);
+                    heic2any({ blob: file, toType: 'image/jpeg', quality: 0.7 })
+                        .then(function(convertedBlob) {
+                            img.src = URL.createObjectURL(convertedBlob);
+                            loading.remove();
+                        })
+                        .catch(function() {
+                            loading.textContent = '📷 HEIC';
+                        });
+                } else {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        img.src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
         });
     </script>
