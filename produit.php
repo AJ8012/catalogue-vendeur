@@ -44,96 +44,139 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($produit['nom']); ?> - Catalogue</title>
-
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-3FXBWCRQQR');
-    </script>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3FXBWCRQQR');</script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ======== HEADER MINIMAL ======== -->
-    <header class="header-minimal">
-        <div class="header-inner">
-            <div class="logo">
-                <a href="index.php">Catalogue Vendeur</a>
-            </div>
-            <nav class="nav-links">
-                <?php if (!empty($_SESSION['id'])): ?>
-                    <span class="bienvenue-minimal">👋 <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
-                    <a href="ajouter_produit.php" class="nav-btn">Ajouter</a>
-                    <a href="actions/action_logout.php" class="nav-btn">Se déconnecter</a>
-                <?php else: ?>
-                    <a href="login.php" class="nav-btn">Connexion</a>
-                <?php endif; ?>
-            </nav>
-        </div>
-    </header>
+<header class="header-minimal">
+    <div class="header-inner">
+        <div class="logo"><a href="index.php">Catalogue Vendeur</a></div>
+        <nav class="nav-links">
+            <?php if (!empty($_SESSION['id'])): ?>
+                <span class="bienvenue-minimal">👋 <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
+                <a href="ajouter_produit.php" class="nav-btn">Ajouter</a>
+                <a href="actions/action_logout.php" class="nav-btn">Se déconnecter</a>
+            <?php else: ?>
+                <a href="login.php" class="nav-btn">Connexion</a>
+            <?php endif; ?>
+        </nav>
+    </div>
+</header>
 
-    <!-- ======== PAGE PRODUIT ======== -->
-    <main class="page-produit-portier">
-        <div class="produit-layout">
-
-            <!-- COLONNE GAUCHE : IMAGE(S) -->
-            <div class="produit-images">
-                <?php if (!empty($images)): ?>
-                    <!-- Image principale (la première) -->
-                    <div class="image-principale">
-                        <img id="main-image" src="<?php echo htmlspecialchars($images[0]['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
-                    </div>
-                    <!-- Miniatures (si plusieurs images) -->
-                    <?php if (count($images) > 1): ?>
-                        <div class="miniatures">
-                            <?php foreach ($images as $img): ?>
-                                <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1&w=100&h=100&crop=fill'); ?>" alt="" class="miniature" onclick="document.getElementById('main-image').src = this.src.replace('?f_auto=1&w=100&h=100&crop=fill', '?f_auto=1')">
-                            <?php endforeach; ?>
+<main class="page-produit-porter">
+    <!-- Section image avec carrousel -->
+    <div class="produit-image-section">
+        <?php if (!empty($images)): ?>
+            <div class="carousel-container">
+                <div class="carousel-track" id="carouselTrack">
+                    <?php foreach ($images as $img): ?>
+                        <div class="carousel-slide">
+                            <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
                         </div>
-                    <?php endif; ?>
-                <?php else: ?>
-                    <div class="image-principale">
-                        <img src="uploads/placeholder.png?f_auto=1" alt="Image non disponible">
-                    </div>
-                <?php endif; ?>
-            </div>
-
-            <!-- COLONNE DROITE : INFOS -->
-            <div class="produit-infos">
-                <h1 class="produit-marque"><?php echo htmlspecialchars($produit['nom']); ?></h1>
-                <?php if (!empty($produit['description'])): ?>
-                    <p class="produit-description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
-                <?php endif; ?>
-                <div class="produit-prix">
-                    <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
-                        <?php echo number_format($produit['prix'], 0, ',', ' '); ?> UM
-                    <?php else: ?>
-                        Prix sur demande
-                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
-
-                <!-- BOUTON WHATSAPP (UNIQUEMENT ICI) -->
-                <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '12345678'; ?>?text=<?php echo $message_whatsapp; ?>" target="_blank" class="btn-whatsapp-produit">
-                    📱 Commander sur WhatsApp
-                </a>
-
-                <!-- LIEN MODIFIER (si connecté) -->
-                <?php if (!empty($_SESSION['id'])): ?>
-                    <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn-modifier-produit">Modifier ce produit</a>
+                <?php if (count($images) > 1): ?>
+                    <button class="carousel-btn carousel-btn-left" id="prevBtn">‹</button>
+                    <button class="carousel-btn carousel-btn-right" id="nextBtn">›</button>
+                    <div class="carousel-indicator" id="carouselIndicator">1 / <?php echo count($images); ?></div>
                 <?php endif; ?>
-
-                <!-- RETOUR -->
-                <a href="index.php" class="btn-retour-produit">← Retour à l'accueil</a>
             </div>
+        <?php else: ?>
+            <div class="carousel-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide">
+                        <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <!-- Section infos produit -->
+    <div class="produit-infos-section">
+        <p class="produit-marque"><?php echo htmlspecialchars($produit['nom']); ?></p>
+        <p class="produit-nom"><?php echo htmlspecialchars($produit['nom']); ?></p>
+        <?php if (!empty($produit['description'])): ?>
+            <p class="produit-description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
+        <?php endif; ?>
+        <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
+            <p class="produit-prix"><?php echo number_format($produit['prix'], 0, ',', ' '); ?> UM</p>
+        <?php else: ?>
+            <p class="produit-prix">Prix sur demande</p>
+        <?php endif; ?>
+
+        <div class="produit-actions">
+            <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>?text=<?php echo $message_whatsapp; ?>" target="_blank" class="btn-whatsapp-porter">📱 Commander sur WhatsApp</a>
+            <?php if (!empty($_SESSION['id'])): ?>
+                <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn-modifier-porter">Modifier</a>
+            <?php endif; ?>
         </div>
-    </main>
+    </div>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('carouselTrack');
+        if (!track) return;
+        const slides = track.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        if (totalSlides <= 1) return;
+
+        let currentIndex = 0;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicator = document.getElementById('carouselIndicator');
+
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            track.style.transform = 'translateX(' + offset + '%)';
+            if (indicator) {
+                indicator.textContent = (currentIndex + 1) + ' / ' + totalSlides;
+            }
+        }
+
+        prevBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        });
+
+        nextBtn.addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        });
+
+        // Clavier : flèches gauche/droite
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            } else if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            }
+        });
+
+        // Option : swipe sur mobile (simple)
+        let startX = 0;
+        track.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+        });
+        track.addEventListener('touchend', function(e) {
+            if (!startX) return;
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            if (Math.abs(diff) > 30) {
+                if (diff > 0) {
+                    nextBtn.click();
+                } else {
+                    prevBtn.click();
+                }
+            }
+            startX = 0;
+        });
+    });
+</script>
 
 </body>
 </html>

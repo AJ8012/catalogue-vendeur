@@ -484,3 +484,226 @@ img {
         grid-template-columns: 1fr;
     }
 }
+
+
+
+/* ============================================
+   PAGE PRODUIT – STYLE CARROUSEL
+   ============================================ */
+.page-produit-porter {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.produit-image-section {
+    flex: 1 1 55%;
+}
+
+.produit-infos-section {
+    flex: 1 1 40%;
+    padding-top: 20px;
+}
+
+.produit-marque {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+    margin: 0 0 4px 0;
+}
+
+.produit-nom {
+    font-size: 20px;
+    font-weight: 400;
+    color: #333;
+    margin: 0 0 12px 0;
+}
+
+.produit-description {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    margin: 0 0 20px 0;
+}
+
+.produit-prix {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 30px 0;
+}
+
+.produit-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-whatsapp-porter {
+    display: inline-block;
+    padding: 14px 36px;
+    background: #000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+}
+
+.btn-whatsapp-porter:hover {
+    background: #333;
+}
+
+.btn-modifier-porter {
+    display: inline-block;
+    padding: 14px 36px;
+    background: transparent;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.btn-modifier-porter:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+/* ============================================
+   CARROUSEL
+   ============================================ */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f7f7f7;
+}
+
+.carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s ease;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    height: 100%;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 32px;
+    padding: 0 16px;
+    height: 60px;
+    cursor: pointer;
+    border-radius: 0;
+    color: #000;
+    transition: background 0.2s, opacity 0.2s;
+    opacity: 0.7;
+    z-index: 2;
+}
+
+.carousel-btn:hover {
+    background: #fff;
+    opacity: 1;
+}
+
+.carousel-btn-left {
+    left: 8px;
+}
+
+.carousel-btn-right {
+    right: 8px;
+}
+
+.carousel-indicator {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 2;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1024px) {
+    .page-produit-porter {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .produit-image-section {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+    .produit-infos-section {
+        flex: 1 1 auto;
+        width: 100%;
+        padding-top: 0;
+    }
+    .carousel-btn {
+        height: 50px;
+        font-size: 28px;
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-produit-porter {
+        padding: 0 10px;
+        margin: 20px auto;
+    }
+    .produit-marque {
+        font-size: 22px;
+    }
+    .produit-prix {
+        font-size: 24px;
+    }
+    .btn-whatsapp-porter {
+        padding: 12px 24px;
+        font-size: 13px;
+        width: 100%;
+        text-align: center;
+    }
+    .btn-modifier-porter {
+        padding: 12px 24px;
+        font-size: 13px;
+        width: 100%;
+        text-align: center;
+    }
+    .produit-actions {
+        flex-direction: column;
+    }
+}
