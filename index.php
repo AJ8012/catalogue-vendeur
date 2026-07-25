@@ -64,9 +64,7 @@ $recup_produits->execute();
         $compteur = 0;
         while ($produit = $recup_produits->fetch()) {
             $compteur++;
-            // On récupère l'image (si elle existe) ou placeholder
             $image = htmlspecialchars($produit['image'] ?? 'placeholder.png');
-            // On ajoute ?f_auto=1 pour que Cloudinary optimise
             $image_url = $image . '?f_auto=1';
             ?>
             <div class="carte-produit-portier">
@@ -76,9 +74,6 @@ $recup_produits->execute();
                     </div>
                     <div class="carte-infos-portier">
                         <p class="carte-marque"><?php echo htmlspecialchars($produit['nom']); ?></p>
-                        <?php if (!empty($produit['description'])): ?>
-                            <p class="carte-nom"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
-                        <?php endif; ?>
                         <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
                             <p class="carte-prix"><?php echo number_format($produit['prix'], 0, ',', ' '); ?> UM</p>
                         <?php else: ?>

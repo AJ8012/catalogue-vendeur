@@ -18,12 +18,13 @@ $req_img->execute([$id_produit]);
 $images = $req_img->fetchAll();
 
 $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " . $produit['nom']);
+$total_images = count($images);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title><?php echo htmlspecialchars($produit['nom']); ?> - Catalogue</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-3FXBWCRQQR');</script>
@@ -38,7 +39,7 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         <nav class="nav-links">
             <a href="index.php" class="nav-btn">Accueil</a>
             <?php if (!empty($_SESSION['id'])): ?>
-                <span class="bienvenue-minimal">👋 <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
+                <span class="bienvenue-minimal"> <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
                 <a href="ajouter_produit.php" class="nav-btn">Ajouter</a>
                 <a href="actions/action_logout.php" class="nav-btn">Se déconnecter</a>
             <?php else: ?>
@@ -49,42 +50,44 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
 </header>
 
 <main class="page-produit-porter">
-    <div class="image-section">
-        <!-- Carrousel -->
-        <div class="carousel-container">
-            <?php if (!empty($images)): ?>
-                <div class="carousel-slides">
-                    <?php foreach ($images as $idx => $img): ?>
-                        <div class="carousel-slide <?php echo ($idx === 0) ? 'active' : ''; ?>">
-                            <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+    <!-- Section image avec carrousel -->
+    <div class="produit-image-section">
+        <div class="carousel-container" id="carousel">
+            <div class="carousel-track" id="carouselTrack">
+                <?php if (!empty($images)): ?>
+                    <?php foreach ($images as $img): ?>
+                        <div class="carousel-slide">
+                            <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>" draggable="false">
                         </div>
                     <?php endforeach; ?>
-                </div>
-                <button class="carousel-btn prev-btn" onclick="changeSlide(-1)">&#10094;</button>
-                <button class="carousel-btn next-btn" onclick="changeSlide(1)">&#10095;</button>
-                <div class="carousel-indicators">
-                    <?php foreach ($images as $idx => $img): ?>
-                        <span class="dot <?php echo ($idx === 0) ? 'active' : ''; ?>" onclick="goToSlide(<?php echo $idx; ?>)"></span>
-                    <?php endforeach; ?>
-                </div>
-            <?php else: ?>
-                <div class="carousel-slides">
-                    <div class="carousel-slide active">
-                        <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+                <?php else: ?>
+                    <div class="carousel-slide">
+                        <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>" draggable="false">
                     </div>
+                <?php endif; ?>
+            </div>
+            <?php if ($total_images > 1): ?>
+                <!-- Flèches -->
+                <button class="carousel-btn carousel-btn-left" id="prevBtn">&#10094;</button>
+                <button class="carousel-btn carousel-btn-right" id="nextBtn">&#10095;</button>
+                <!-- Compteur -->
+                <div class="carousel-counter" id="counter">1 / <?php echo $total_images; ?></div>
+                <!-- Indicateur de progression (bande noire) -->
+                <div class="carousel-progress">
+                    <div class="carousel-progress-bar" id="progressBar"></div>
                 </div>
             <?php endif; ?>
         </div>
     </div>
 
-    <div class="infos-section">
-        <p class="marque"><?php echo htmlspecialchars($produit['nom']); ?></p>
-        <p class="nom-produit"><?php echo htmlspecialchars($produit['nom']); ?></p>
+    <!-- Infos produit -->
+    <div class="produit-infos-section">
+        <p class="produit-marque"><?php echo htmlspecialchars($produit['nom']); ?></p>
         <?php if (!empty($produit['description'])): ?>
-            <p class="description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
+            <p class="produit-description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
         <?php endif; ?>
-        <p class="prix"><?php echo (!empty($produit['prix']) && $produit['prix'] > 0) ? number_format($produit['prix'], 0, ',', ' ') . ' UM' : 'Prix sur demande'; ?></p>
-        <div class="actions">
+        <p class="produit-prix"><?php echo (!empty($produit['prix']) && $produit['prix'] > 0) ? number_format($produit['prix'], 0, ',', ' ') . ' UM' : 'Prix sur demande'; ?></p>
+        <div class="produit-actions">
             <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>?text=<?php echo $message_whatsapp; ?>" target="_blank" class="btn-whatsapp-porter">📱 Commander sur WhatsApp</a>
             <?php if (!empty($_SESSION['id'])): ?>
                 <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn-modifier-porter">Modifier</a>
@@ -94,29 +97,67 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
 </main>
 
 <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const dots = document.querySelectorAll('.dot');
+    document.addEventListener('DOMContentLoaded', function() {
+        const track = document.getElementById('carouselTrack');
+        const slides = track.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        if (totalSlides <= 1) return;
 
-    function goToSlide(index) {
-        if (slides.length === 0) return;
-        if (index < 0) index = slides.length - 1;
-        if (index >= slides.length) index = 0;
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
+        let currentIndex = 0;
+        let startX = 0;
+        let isDragging = false;
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const counter = document.getElementById('counter');
+        const progressBar = document.getElementById('progressBar');
+
+        function updateCarousel(index) {
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            currentIndex = index;
+            track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+            counter.textContent = (currentIndex + 1) + ' / ' + totalSlides;
+            progressBar.style.width = ((currentIndex + 1) / totalSlides * 100) + '%';
+        }
+
+        // Événements tactiles (swipe)
+        track.addEventListener('touchstart', function(e) {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+        }, { passive: true });
+
+        track.addEventListener('touchend', function(e) {
+            if (!isDragging) return;
+            const endX = e.changedTouches[0].clientX;
+            const diff = startX - endX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    updateCarousel(currentIndex + 1);
+                } else {
+                    updateCarousel(currentIndex - 1);
+                }
+            }
+            isDragging = false;
+        }, { passive: true });
+
+        // Flèches
+        prevBtn.addEventListener('click', function() {
+            updateCarousel(currentIndex - 1);
         });
-        dots.forEach((dot, i) => {
-            dot.classList.toggle('active', i === index);
+        nextBtn.addEventListener('click', function() {
+            updateCarousel(currentIndex + 1);
         });
-        currentSlide = index;
-    }
 
-    function changeSlide(direction) {
-        goToSlide(currentSlide + direction);
-    }
+        // Clavier (flèches gauche/droite)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') updateCarousel(currentIndex - 1);
+            if (e.key === 'ArrowRight') updateCarousel(currentIndex + 1);
+        });
 
-    // Initialisation
-    goToSlide(0);
+        // Initialisation
+        updateCarousel(0);
+    });
 </script>
 
 </body>
