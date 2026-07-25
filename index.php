@@ -48,7 +48,7 @@ $recup_produits->execute();
             </div>
             <nav class="nav-links">
                 <?php if (!empty($_SESSION['id'])): ?>
-                    <span class="bienvenue-minimal">👋 <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
+                    <span class="bienvenue-minimal"><?php echo htmlspecialchars($_SESSION['nom']); ?></span>
                     <a href="ajouter_produit.php" class="nav-btn">Ajouter</a>
                     <a href="actions/action_logout.php" class="nav-btn">Se déconnecter</a>
                 <?php else: ?>

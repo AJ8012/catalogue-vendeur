@@ -1,707 +1,35 @@
 /* ============================================
-   CATALOGUE VENDEUR — Direction artistique
-   "L'étal de nuit" : le fond sombre est l'étal du
-   marché à la tombée du jour. Chaque produit est une
-   étiquette en papier kraft épinglée dessus — d'où le
-   petit trou en haut de chaque carte, comme une vraie
-   étiquette de prix qu'on accroche avec une ficelle.
+   STYLE PORTER – TOUT LE SITE
    ============================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap");
 
-/* ============================================
-   JETONS DE DESIGN
-   ============================================ */
-:root {
-    /* Couleurs */
-    --nuit: #1a1613;         /* fond de page — l'étal à la nuit tombée */
-    --nuit-2: #241e19;        /* panneau légèrement plus clair (header) */
-    --tag: #f1e6cc;          /* papier kraft — cartes produit, formulaires */
-    --tag-2: #e6d6ac;         /* papier kraft plus soutenu (hover, chips) */
-    --braise: #e8a33d;        /* ambre vif — focus, accents sur fond sombre */
-    --braise-dark: #8a5419;   /* ambre profond — texte/liens sur papier clair */
-    --jade: #3fa57a;          /* vert — réservé à l'action WhatsApp */
-    --jade-dark: #2e7f5e;
-    --encre: #221b12;         /* texte sur papier */
-    --fume: #beb09a;          /* texte secondaire sur fond sombre */
-    --fume-2: #6b5f49;        /* texte secondaire sur papier */
-    --erreur: #c0392b;
-    --erreur-bg: #f6dcd3;
-
-    --ligne: rgba(241, 230, 204, 0.14);  /* liserés sur fond sombre */
-    --ligne-tag: #d9c69c;                 /* liserés sur papier */
-
-    /* Typographie : titre caractériel + corps neutre + mono "ticket de caisse" */
-    --police-titre: "Fraunces", Georgia, serif;
-    --police-mono: "Space Mono", "Courier New", monospace;
-    --police-corps: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-
-    /* Rayons + ombres */
-    --r-sm: 6px;
-    --r-md: 10px;
-    --r-lg: 18px;
-    --ombre-tag: 0 1px 2px rgba(0, 0, 0, .35), 0 14px 30px -12px rgba(0, 0, 0, .55);
-    --ombre-tag-hover: 0 2px 4px rgba(0, 0, 0, .4), 0 22px 40px -14px rgba(0, 0, 0, .6);
-}
-
-/* ============================================
-   RESET & BASE
-   ============================================ */
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    margin: 0;
-    font-family: var(--police-corps);
-    color: var(--fume);
-    background-color: var(--nuit);
-    background-image: radial-gradient(ellipse 70% 45% at 50% -8%, rgba(232, 163, 61, .10), transparent 60%);
-    background-repeat: no-repeat;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #f8f7f4;
+    color: #1a1a1a;
     -webkit-font-smoothing: antialiased;
 }
 
 a {
-    color: inherit;
-}
-
-::selection {
-    background: var(--braise);
-    color: var(--nuit);
-}
-
-::-webkit-scrollbar {
-    width: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--nuit);
-}
-
-::-webkit-scrollbar-thumb {
-    background: #3a322a;
-    border-radius: 8px;
-    border: 3px solid var(--nuit);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #4a4038;
-}
-
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-    outline: 2px solid var(--braise);
-    outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-/* ============================================
-   EN-TÊTE
-   ============================================ */
-.header {
-    text-align: center;
-    padding: 44px 20px 34px;
-    background: var(--nuit-2);
-    border-bottom: 1px solid var(--ligne);
-}
-
-.header h1 {
-    font-family: var(--police-titre);
-    font-size: 36px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: var(--tag);
-    margin: 0 0 14px;
-}
-
-.bienvenue {
-    font-family: var(--police-mono);
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--fume);
-    opacity: .85;
-    margin: 0 0 22px;
-}
-
-/* ============================================
-   BOUTONS
-   ============================================ */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 13px 26px;
-    margin: 0 6px;
-    text-decoration: none;
-    font-family: var(--police-corps);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    border-radius: var(--r-sm);
-    border: 1.5px solid var(--ligne);
-    color: var(--fume);
-    background: transparent;
-    cursor: pointer;
-    transition: transform .18s ease, box-shadow .18s ease, background .18s ease,
-                color .18s ease, border-color .18s ease;
-}
-
-.btn:hover {
-    border-color: var(--tag);
-    color: var(--tag);
-    transform: translateY(-2px);
-}
-
-.btn-ajout,
-.btn-connexion {
-    background: var(--braise);
-    color: var(--nuit);
-    border-color: var(--braise);
-}
-
-.btn-ajout:hover,
-.btn-connexion:hover {
-    background: var(--tag);
-    border-color: var(--tag);
-    color: var(--nuit);
-    box-shadow: 0 10px 24px -8px rgba(232, 163, 61, .5);
-}
-
-.btn-deconnexion {
-    background: transparent;
-    color: var(--fume);
-    border-color: var(--ligne);
-}
-
-.btn-deconnexion:hover {
-    background: var(--tag);
-    color: var(--nuit);
-    border-color: var(--tag);
-}
-
-.btn-modifier {
-    display: block;
-    margin-top: 12px;
-    background: transparent;
-    color: var(--fume-2);
-    text-decoration: none;
-    text-align: center;
-    padding: 8px;
-    font-family: var(--police-corps);
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1.5px dashed var(--ligne-tag);
-    border-radius: var(--r-sm);
-    transition: background .2s ease, color .2s ease;
-}
-
-.btn-modifier:hover {
-    background: var(--tag-2);
-    color: var(--encre);
-}
-
-/* Bouton "Commander sur WhatsApp" : ciblé par le lien wa.me lui-même,
-   pas seulement par une classe — il reste vert peu importe qu'il porte
-   .btn-whatsapp (index.php) ou .btn.btn-ajout (produit.php). */
-a[href^="https://wa.me/"] {
-    background: var(--jade);
-    border-color: var(--jade);
-    color: #fff;
-}
-
-a[href^="https://wa.me/"]:hover {
-    background: var(--jade-dark);
-    border-color: var(--jade-dark);
-    color: #fff;
-    box-shadow: 0 10px 24px -8px rgba(63, 165, 122, .45);
-}
-
-.btn-whatsapp {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-align: center;
-    margin: 0 16px 16px;
-    padding: 13px;
-    text-decoration: none;
-    font-family: var(--police-corps);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: var(--r-sm);
-    border: 1.5px solid var(--ligne-tag);
-    color: var(--encre);
-    background: transparent;
-    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-}
-
-.btn-whatsapp:hover {
-    background: var(--tag-2);
-    transform: translateY(-2px);
-}
-
-/* ============================================
-   GRILLE DE PRODUITS
-   ============================================ */
-.grille-produits {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 40px 32px;
-    padding: 48px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.carte-produit {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background: var(--tag);
-    color: var(--encre);
-    border-radius: var(--r-md);
-    box-shadow: var(--ombre-tag);
-    overflow: hidden;
-    animation: apparition .5s ease-out both;
-    transition: transform .25s ease, box-shadow .25s ease;
-}
-
-.carte-produit:hover {
-    transform: translateY(-6px);
-    box-shadow: var(--ombre-tag-hover);
-}
-
-/* Le trou de l'étiquette, comme épinglée à l'étal */
-.carte-produit::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    width: 12px;
-    height: 12px;
-    background: var(--nuit);
-    border-radius: 50%;
-    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .4);
-    z-index: 2;
-}
-
-.carte-produit:nth-child(1) { animation-delay: .02s; }
-.carte-produit:nth-child(2) { animation-delay: .07s; }
-.carte-produit:nth-child(3) { animation-delay: .12s; }
-.carte-produit:nth-child(4) { animation-delay: .17s; }
-.carte-produit:nth-child(5) { animation-delay: .22s; }
-.carte-produit:nth-child(6) { animation-delay: .27s; }
-.carte-produit:nth-child(n+7) { animation-delay: .3s; }
-
-@keyframes apparition {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.lien-carte {
     text-decoration: none;
     color: inherit;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
 }
 
-.carte-produit img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    background: var(--tag-2);
-    filter: grayscale(.15) contrast(.97);
-    transition: transform .5s ease, filter .4s ease;
-}
-
-.carte-produit:hover img {
-    transform: scale(1.05);
-    filter: grayscale(0) contrast(1);
-}
-
-.carte-produit h3 {
-    font-family: var(--police-titre);
-    font-size: 17px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    color: var(--encre);
-    margin: 18px 16px 4px;
-}
-
-.carte-produit .description {
-    font-size: 13px;
-    color: var(--fume-2);
-    margin: 0 16px 10px;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.carte-produit .prix {
-    font-family: var(--police-mono);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--braise-dark);
-    letter-spacing: .5px;
-    margin: 0 16px 16px;
-    padding-top: 10px;
-    border-top: 1px dashed var(--ligne-tag);
-}
-
-.aucun-produit {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: var(--fume);
-    font-family: var(--police-mono);
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 70px 30px;
-    border: 1.5px dashed var(--ligne);
-    border-radius: var(--r-lg);
-}
-
-/* ============================================
-   PAGE PRODUIT (détail) — la grande étiquette
-   ============================================ */
-.page-produit {
-    position: relative;
-    max-width: 600px;
-    margin: 48px auto;
-    padding: 40px 28px 32px;
-    text-align: center;
-    background: var(--tag);
-    color: var(--encre);
-    border-radius: var(--r-lg);
-    box-shadow: var(--ombre-tag);
-}
-
-.page-produit::before {
-    content: "";
-    position: absolute;
-    top: 14px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 14px;
-    height: 14px;
-    background: var(--nuit);
-    border-radius: 50%;
-    box-shadow: inset 0 2px 3px rgba(0, 0, 0, .4);
-}
-
-.page-produit .galerie-images {
-    justify-content: center;
-    margin: 8px 0 24px;
-}
-
-.page-produit .galerie-images img,
-.page-produit > img {
-    width: 100%;
-    max-width: 320px;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    background: var(--tag-2);
-    border-radius: var(--r-md);
-    box-shadow: 0 10px 24px -10px rgba(0, 0, 0, .35);
-}
-
-.page-produit h2 {
-    font-family: var(--police-titre);
-    font-size: 27px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 8px 0;
-}
-
-.page-produit .description {
-    font-size: 14px;
-    color: var(--fume-2);
-    line-height: 1.7;
-    margin: 8px 0 18px;
-}
-
-.page-produit .prix {
-    display: inline-block;
-    font-family: var(--police-mono);
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--braise-dark);
-    margin: 8px 0 26px;
-    padding: 8px 0;
-    border-top: 1px dashed var(--ligne-tag);
-    border-bottom: 1px dashed var(--ligne-tag);
-}
-
-/* Le CTA WhatsApp sur cette page porte .btn.btn-ajout dans le HTML actuel :
-   on l'agrandit un peu ici pour qu'il domine comme action principale. */
-.page-produit .btn-ajout,
-.page-produit a[href^="https://wa.me/"] {
-    padding: 16px 44px;
-    margin: 0 6px 12px;
-}
-
-/* ============================================
-   FORMULAIRES (login, signup, ajouter/modifier produit)
-   ============================================ */
-.formulaire {
-    max-width: 440px;
-    margin: 60px auto;
-    padding: 36px 32px;
-    background: var(--tag);
-    color: var(--encre);
-    border-radius: var(--r-lg);
-    box-shadow: var(--ombre-tag);
-}
-
-.formulaire h1 {
-    font-family: var(--police-titre);
-    text-align: center;
-    font-size: 23px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--encre);
-    margin: 0 0 4px;
-}
-
-.formulaire h2 {
-    font-family: var(--police-titre);
-    text-align: center;
-    font-size: 19px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--fume-2);
-    margin: 0 0 26px;
-}
-
-.champ {
-    margin-bottom: 18px;
-}
-
-.champ label {
+img {
+    max-width: 100%;
     display: block;
-    font-family: var(--police-mono);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    color: var(--fume-2);
-    margin-bottom: 7px;
-}
-
-.champ input,
-.champ textarea {
-    width: 100%;
-    padding: 11px 13px;
-    border: 1.5px solid var(--ligne-tag);
-    border-radius: var(--r-sm);
-    font-size: 14px;
-    font-family: var(--police-corps);
-    background: #fbf5e7;
-    color: var(--encre);
-    transition: border-color .18s ease, box-shadow .18s ease;
-}
-
-.champ input::placeholder,
-.champ textarea::placeholder {
-    color: var(--fume-2);
-    opacity: .7;
-}
-
-.champ input:focus,
-.champ textarea:focus {
-    outline: none;
-    border-color: var(--braise);
-    box-shadow: 0 0 0 3px rgba(232, 163, 61, .25);
-}
-
-.champ textarea {
-    min-height: 90px;
-    resize: vertical;
-}
-
-input[type="file"] {
-    font-family: var(--police-corps);
-    font-size: 13px;
-    color: var(--fume-2);
-}
-
-input[type="file"]::file-selector-button,
-input[type="file"]::-webkit-file-upload-button {
-    padding: 9px 18px;
-    margin-right: 12px;
-    border-radius: var(--r-sm);
-    border: 1.5px solid var(--braise-dark);
-    background: transparent;
-    color: var(--braise-dark);
-    font-family: var(--police-corps);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-    cursor: pointer;
-    transition: background .18s ease, color .18s ease;
-}
-
-input[type="file"]::file-selector-button:hover,
-input[type="file"]::-webkit-file-upload-button:hover {
-    background: var(--braise-dark);
-    color: #fff;
-}
-
-.formulaire button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    margin-top: 10px;
-    background: var(--braise);
-    color: var(--nuit);
-    border: 1.5px solid var(--braise);
-    border-radius: var(--r-sm);
-    font-family: var(--police-corps);
-    font-size: 13px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    cursor: pointer;
-    transition: transform .18s ease, box-shadow .18s ease;
-}
-
-.formulaire button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 26px -10px rgba(232, 163, 61, .5);
-}
-
-.message-erreur {
-    background: var(--erreur-bg);
-    color: var(--erreur);
-    border: 1px solid var(--erreur);
-    border-radius: var(--r-sm);
-    padding: 11px 14px;
-    font-size: 13px;
-    margin-bottom: 18px;
-}
-
-.lien-bas {
-    text-align: center;
-    margin-top: 22px;
-    font-size: 13px;
-    color: var(--fume-2);
-}
-
-.lien-bas a {
-    color: var(--braise-dark);
-    font-weight: 700;
-    text-decoration: underline;
 }
 
 /* ============================================
-   RESPONSIVE
+   HEADER MINIMAL
    ============================================ */
-@media (max-width: 600px) {
-    .header h1 {
-        font-size: 25px;
-        letter-spacing: 2px;
-    }
-
-    .btn {
-        padding: 10px 18px;
-        font-size: 11px;
-        margin: 4px;
-    }
-
-    .grille-produits {
-        grid-template-columns: 1fr 1fr;
-        gap: 18px 14px;
-        padding: 24px 16px;
-    }
-
-    .carte-produit h3 {
-        font-size: 13px;
-    }
-
-    .page-produit,
-    .formulaire {
-        margin: 30px auto;
-        padding: 26px 18px;
-    }
-
-    .page-produit .prix {
-        font-size: 21px;
-    }
-}
-
-@media (max-width: 380px) {
-    .grille-produits {
-        grid-template-columns: 1fr;
-    }
-}
-
-.btn-supprimer {
-    display: inline-block;
-    padding: 12px 28px;
-    background: #c0392b;
-    color: #fff;
-    border: 1.5px solid #c0392b;
-    border-radius: var(--r-sm);
-    font-family: var(--police-corps);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: background .18s ease, transform .18s ease;
-}
-
-.btn-supprimer:hover {
-    background: #a93226;
-    transform: translateY(-2px);
-}
-
-/* Lightbox */
-#lightbox {
-    animation: lightboxFade .3s ease-out;
-}
-@keyframes lightboxFade {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-#lightbox-close:hover {
-    transform: rotate(90deg);
-}
-
-
-/* ============================================
-   STYLE PORTER – INDEX UNIQUEMENT
-   ============================================ */
-
-/* ---- HEADER MINIMAL ---- */
 .header-minimal {
     padding: 20px 40px;
     background: #ffffff;
@@ -721,7 +49,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
     font-size: 22px;
     font-weight: 700;
     color: #000;
-    text-decoration: none;
     letter-spacing: 0.5px;
 }
 
@@ -732,27 +59,26 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 
 .bienvenue-minimal {
-    font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #888;
 }
 
 .nav-btn {
-    font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: #000;
-    text-decoration: none;
     padding: 8px 16px;
     border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s;
 }
 
 .nav-btn:hover {
     background: #f0f0f0;
 }
 
-/* ---- GRILLE PRODUITS ---- */
+/* ============================================
+   GRILLE PRODUITS (index)
+   ============================================ */
 .grille-produits-portier {
     max-width: 1400px;
     margin: 40px auto;
@@ -762,7 +88,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
     gap: 30px;
 }
 
-/* ---- CARTE PRODUIT ---- */
 .carte-produit-portier {
     background: #ffffff;
     border-radius: 0;
@@ -777,8 +102,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 
 .lien-carte-portier {
-    text-decoration: none;
-    color: inherit;
     display: block;
 }
 
@@ -810,12 +133,11 @@ input[type="file"]::-webkit-file-upload-button:hover {
     font-weight: 700;
     color: #000;
     margin: 0 0 2px 0;
-    letter-spacing: 0.3px;
     text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .carte-nom {
-    font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #666;
@@ -828,7 +150,6 @@ input[type="file"]::-webkit-file-upload-button:hover {
 }
 
 .carte-prix {
-    font-family: 'Inter', sans-serif;
     font-size: 17px;
     font-weight: 700;
     color: #000;
@@ -838,18 +159,281 @@ input[type="file"]::-webkit-file-upload-button:hover {
 .aucun-produit-portier {
     grid-column: 1 / -1;
     text-align: center;
-    font-family: 'Inter', sans-serif;
     font-size: 16px;
     color: #999;
     padding: 80px 20px;
 }
 
-/* ---- RESPONSIVE ---- */
+/* ============================================
+   PAGE PRODUIT (détail)
+   ============================================ */
+.page-produit-porter {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 40px;
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.page-produit-porter .galerie-images {
+    flex: 1 1 60%;
+}
+
+.page-produit-porter .galerie-images img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    background: #f7f7f7;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.page-produit-porter .infos-produit {
+    flex: 1 1 40%;
+    padding-top: 20px;
+}
+
+.page-produit-porter .infos-produit .marque {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    text-transform: uppercase;
+    margin: 0 0 4px 0;
+}
+
+.page-produit-porter .infos-produit .nom-produit {
+    font-size: 20px;
+    font-weight: 400;
+    color: #333;
+    margin: 0 0 12px 0;
+}
+
+.page-produit-porter .infos-produit .description {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.7;
+    margin: 0 0 20px 0;
+}
+
+.page-produit-porter .infos-produit .prix {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 30px 0;
+}
+
+.btn-whatsapp-porter {
+    display: inline-block;
+    padding: 14px 36px;
+    background: #000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+}
+
+.btn-whatsapp-porter:hover {
+    background: #333;
+}
+
+.btn-modifier-porter {
+    display: inline-block;
+    margin-left: 12px;
+    padding: 14px 36px;
+    background: transparent;
+    color: #000;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.btn-modifier-porter:hover {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+/* Lightbox (pour produit) */
+#lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    cursor: default;
+}
+
+#lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 300;
+    transition: transform .2s;
+}
+
+#lightbox-close:hover {
+    transform: rotate(90deg);
+}
+
+/* ============================================
+   FORMULAIRES (login, signup, ajouter, modifier)
+   ============================================ */
+.formulaire-porter {
+    max-width: 440px;
+    margin: 60px auto;
+    padding: 40px 32px;
+    background: #ffffff;
+    border-radius: 0;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.formulaire-porter h1,
+.formulaire-porter h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.formulaire-porter h1 {
+    font-size: 26px;
+    margin-bottom: 4px;
+}
+
+.formulaire-porter h2 {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 28px;
+    font-weight: 400;
+}
+
+.champ-porter {
+    margin-bottom: 20px;
+}
+
+.champ-porter label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.champ-porter input,
+.champ-porter textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    background: #fafafa;
+    transition: border-color 0.2s;
+    color: #000;
+}
+
+.champ-porter input:focus,
+.champ-porter textarea:focus {
+    outline: none;
+    border-color: #000;
+    background: #fff;
+}
+
+.champ-porter textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.formulaire-porter button {
+    width: 100%;
+    padding: 14px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.formulaire-porter button:hover {
+    background: #333;
+}
+
+.message-erreur-porter {
+    background: #fdecea;
+    color: #c0392b;
+    border: 1px solid #c0392b;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.lien-bas-porter {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: #888;
+}
+
+.lien-bas-porter a {
+    color: #000;
+    font-weight: 600;
+}
+
+.lien-bas-porter a:hover {
+    text-decoration: underline;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
 @media (max-width: 1024px) {
     .grille-produits-portier {
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
         padding: 0 24px;
+    }
+    .page-produit-porter {
+        flex-direction: column;
+        padding: 0 24px;
+    }
+    .page-produit-porter .galerie-images {
+        flex: 1 1 auto;
+    }
+    .page-produit-porter .infos-produit {
+        flex: 1 1 auto;
+        padding-top: 0;
     }
 }
 
@@ -884,6 +468,14 @@ input[type="file"]::-webkit-file-upload-button:hover {
     }
     .carte-prix {
         font-size: 15px;
+    }
+    .page-produit-porter {
+        padding: 0 16px;
+        margin: 24px auto;
+    }
+    .formulaire-porter {
+        margin: 30px auto;
+        padding: 24px 16px;
     }
 }
 

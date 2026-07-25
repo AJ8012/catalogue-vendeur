@@ -42,7 +42,9 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($produit['nom']); ?> - Catalogue</title>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3FXBWCRQQR"></script>
     <script>
@@ -51,103 +53,87 @@ $message_whatsapp = urlencode("Bonjour, je suis intéressé par le produit : " .
         gtag('js', new Date());
         gtag('config', 'G-3FXBWCRQQR');
     </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="header">
-        <h1>Catalogue Vendeur</h1>
-        <a href="index.php" class="btn">⬅ Retour à l'accueil</a>
-    </div>
-
-    <div class="page-produit">
-        <?php if (!empty($images)): ?>
-            <div class="galerie-images" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center;">
-                <?php foreach ($images as $img): ?>
-                    <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>" style="max-width:200px; height:auto; cursor:pointer; border-radius:8px;">
-                <?php endforeach; ?>
+    <!-- ======== HEADER MINIMAL ======== -->
+    <header class="header-minimal">
+        <div class="header-inner">
+            <div class="logo">
+                <a href="index.php">Catalogue Vendeur</a>
             </div>
-        <?php else: ?>
-            <img src="uploads/placeholder.png?f_auto=1" alt="<?php echo htmlspecialchars($produit['nom']); ?>" style="cursor:pointer;">
-        <?php endif; ?>
+            <nav class="nav-links">
+                <?php if (!empty($_SESSION['id'])): ?>
+                    <span class="bienvenue-minimal">👋 <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
+                    <a href="ajouter_produit.php" class="nav-btn">Ajouter</a>
+                    <a href="actions/action_logout.php" class="nav-btn">Se déconnecter</a>
+                <?php else: ?>
+                    <a href="login.php" class="nav-btn">Connexion</a>
+                <?php endif; ?>
+            </nav>
+        </div>
+    </header>
 
-        <h2><?php echo htmlspecialchars($produit['nom']); ?></h2>
+    <!-- ======== PAGE PRODUIT ======== -->
+    <main class="page-produit-portier">
+        <div class="produit-layout">
 
-        <?php if (!empty($produit['description'])): ?>
-            <p class="description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
-        <?php endif; ?>
+            <!-- COLONNE GAUCHE : IMAGE(S) -->
+            <div class="produit-images">
+                <?php if (!empty($images)): ?>
+                    <!-- Image principale (la première) -->
+                    <div class="image-principale">
+                        <img id="main-image" src="<?php echo htmlspecialchars($images[0]['image'] . '?f_auto=1'); ?>" alt="<?php echo htmlspecialchars($produit['nom']); ?>">
+                    </div>
+                    <!-- Miniatures (si plusieurs images) -->
+                    <?php if (count($images) > 1): ?>
+                        <div class="miniatures">
+                            <?php foreach ($images as $img): ?>
+                                <img src="<?php echo htmlspecialchars($img['image'] . '?f_auto=1&w=100&h=100&crop=fill'); ?>" alt="" class="miniature" onclick="document.getElementById('main-image').src = this.src.replace('?f_auto=1&w=100&h=100&crop=fill', '?f_auto=1')">
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <div class="image-principale">
+                        <img src="uploads/placeholder.png?f_auto=1" alt="Image non disponible">
+                    </div>
+                <?php endif; ?>
+            </div>
 
-        <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
-            <p class="prix"><?php echo number_format($produit['prix'], 2); ?> UM</p>
-        <?php else: ?>
-            <p class="prix">Prix sur demande</p>
-        <?php endif; ?>
+            <!-- COLONNE DROITE : INFOS -->
+            <div class="produit-infos">
+                <h1 class="produit-marque"><?php echo htmlspecialchars($produit['nom']); ?></h1>
+                <?php if (!empty($produit['description'])): ?>
+                    <p class="produit-description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
+                <?php endif; ?>
+                <div class="produit-prix">
+                    <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
+                        <?php echo number_format($produit['prix'], 0, ',', ' '); ?> UM
+                    <?php else: ?>
+                        Prix sur demande
+                    <?php endif; ?>
+                </div>
 
-        <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>" target="_blank" class="btn btn-ajout">📱 Commander sur WhatsApp</a>
+                <!-- BOUTON WHATSAPP (UNIQUEMENT ICI) -->
+                <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '12345678'; ?>?text=<?php echo $message_whatsapp; ?>" target="_blank" class="btn-whatsapp-produit">
+                    📱 Commander sur WhatsApp
+                </a>
 
-        <?php if (!empty($_SESSION['id'])): ?>
-            <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn btn-deconnexion">Modifier ce produit</a>
-        <?php endif; ?>
-    </div>
+                <!-- LIEN MODIFIER (si connecté) -->
+                <?php if (!empty($_SESSION['id'])): ?>
+                    <a href="modifier_produit.php?id=<?php echo $produit['id']; ?>" class="btn-modifier-produit">Modifier ce produit</a>
+                <?php endif; ?>
 
-    <!-- LIGHTBOX -->
-    <div id="lightbox" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; justify-content:center; align-items:center; cursor:pointer;">
-        <span id="lightbox-close" style="position:absolute; top:20px; right:30px; font-size:40px; color:#fff; cursor:pointer; font-weight:300; transition:transform .2s;">&times;</span>
-        <img id="lightbox-img" src="" alt="Agrandissement" style="max-width:90%; max-height:90%; border-radius:8px; box-shadow:0 10px 40px rgba(0,0,0,0.6); cursor:default;">
-    </div>
+                <!-- RETOUR -->
+                <a href="index.php" class="btn-retour-produit">← Retour à l'accueil</a>
+            </div>
+        </div>
+    </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const closeBtn = document.getElementById('lightbox-close');
-
-            // Cibler toutes les images de la galerie
-            const galleryImages = document.querySelectorAll('.galerie-images img');
-            // Si une image seule (placeholder) est utilisée
-            const mainImage = document.querySelector('.page-produit > img');
-
-            function openLightbox(src) {
-                lightboxImg.src = src;
-                lightbox.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeLightbox() {
-                lightbox.style.display = 'none';
-                document.body.style.overflow = '';
-            }
-
-            // Écouter les clics sur les images de la galerie
-            galleryImages.forEach(img => {
-                img.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openLightbox(this.src);
-                });
-            });
-
-            // Si l'image principale existe (placeholder)
-            if (mainImage) {
-                mainImage.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openLightbox(this.src);
-                });
-            }
-
-            // Fermeture au clic sur l'overlay ou sur le bouton ×
-            lightbox.addEventListener('click', function(e) {
-                if (e.target === lightbox || e.target === closeBtn) {
-                    closeLightbox();
-                }
-            });
-
-            // Fermeture avec la touche Échap
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && lightbox.style.display === 'flex') {
-                    closeLightbox();
-                }
-            });
-        });
-    </script>
 </body>
 </html>
