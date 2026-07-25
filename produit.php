@@ -86,7 +86,7 @@ $total_images = count($images);
         <?php if (!empty($produit['description'])): ?>
             <p class="produit-description"><?php echo nl2br(htmlspecialchars($produit['description'])); ?></p>
         <?php endif; ?>
-        <p class="produit-prix"><?php echo (!empty($produit['prix']) && $produit['prix'] > 0) ? number_format($produit['prix'], 0, ',', ' ') . ' UM' : 'Prix sur demande'; ?></p>
+        <p class="produit-prix"><?php echo (!empty($produit['prix']) && $produit['prix'] > 0) ? number_format($produit['prix'], 0, ',', ' ') . ' MRU' : 'Prix sur demande'; ?></p>
         <div class="produit-actions">
             <a href="https://wa.me/<?php echo $produit['vendeur_telephone'] ?? '+222'; ?>?text=<?php echo $message_whatsapp; ?>" target="_blank" class="btn-whatsapp-porter">📱 Commander sur WhatsApp</a>
             <?php if (!empty($_SESSION['id'])): ?>
