@@ -695,3 +695,200 @@ input[type="file"]::-webkit-file-upload-button:hover {
 #lightbox-close:hover {
     transform: rotate(90deg);
 }
+
+
+/* ============================================
+   STYLE PORTER – INDEX UNIQUEMENT
+   ============================================ */
+
+/* ---- HEADER MINIMAL ---- */
+.header-minimal {
+    padding: 20px 40px;
+    background: #ffffff;
+    border-bottom: 1px solid #eee;
+}
+
+.header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.bienvenue-minimal {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #888;
+}
+
+.nav-btn {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #000;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-btn:hover {
+    background: #f0f0f0;
+}
+
+/* ---- GRILLE PRODUITS ---- */
+.grille-produits-portier {
+    max-width: 1400px;
+    margin: 40px auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* ---- CARTE PRODUIT ---- */
+.carte-produit-portier {
+    background: #ffffff;
+    border-radius: 0;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.carte-produit-portier:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.15);
+}
+
+.lien-carte-portier {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.carte-image-portier {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f7f7f7;
+}
+
+.carte-image-portier img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.carte-produit-portier:hover .carte-image-portier img {
+    transform: scale(1.04);
+}
+
+.carte-infos-portier {
+    padding: 16px 18px 20px;
+}
+
+.carte-marque {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 2px 0;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+.carte-nom {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    margin: 0 0 6px 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.carte-prix {
+    font-family: 'Inter', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #000;
+    margin: 6px 0 0 0;
+}
+
+.aucun-produit-portier {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #999;
+    padding: 80px 20px;
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 1024px) {
+    .grille-produits-portier {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 600px) {
+    .header-minimal {
+        padding: 16px 20px;
+    }
+    .logo a {
+        font-size: 18px;
+    }
+    .nav-links {
+        gap: 12px;
+    }
+    .nav-btn {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    .grille-produits-portier {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding: 0 16px;
+        margin: 24px auto;
+    }
+    .carte-infos-portier {
+        padding: 12px 14px 16px;
+    }
+    .carte-marque {
+        font-size: 15px;
+    }
+    .carte-nom {
+        font-size: 12px;
+    }
+    .carte-prix {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 380px) {
+    .grille-produits-portier {
+        grid-template-columns: 1fr;
+    }
+}
