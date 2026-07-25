@@ -75,7 +75,7 @@ $recup_produits->execute();
                     <div class="carte-infos-portier">
                         <p class="carte-marque"><?php echo htmlspecialchars($produit['nom']); ?></p>
                         <?php if (!empty($produit['prix']) && $produit['prix'] > 0): ?>
-                            <p class="carte-prix"><?php echo number_format($produit['prix'], 0, ',', ' '); ?> UM</p>
+                            <p class="carte-prix"><?php echo number_format($produit['prix'], 0, ',', ' '); ?> MRU</p>
                         <?php else: ?>
                             <p class="carte-prix">Prix sur demande</p>
                         <?php endif; ?>

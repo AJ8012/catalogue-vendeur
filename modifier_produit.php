@@ -50,7 +50,7 @@ $images = $req_img->fetchAll();
             <textarea name="description"><?php echo htmlspecialchars($produit['description']); ?></textarea>
         </div>
         <div class="champ-porter">
-            <label>Prix (UM)</label>
+            <label>Prix (MRU)</label>
             <input type="number" name="prix" step="0.01" value="<?php echo $produit['prix']; ?>">
         </div>
         <div class="champ-porter">

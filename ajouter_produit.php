@@ -19,7 +19,7 @@ if (empty($_SESSION['id'])) { header('Location: login.php'); exit(); }
     <div class="header-inner">
         <div class="logo"><a href="index.php">Catalogue Vendeur</a></div>
         <nav class="nav-links">
-            <span class="bienvenue-minimal">👋 <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
+            <span class="bienvenue-minimal"> <?php echo htmlspecialchars($_SESSION['nom']); ?></span>
             <a href="actions/action_logout.php" class="nav-btn">Se déconnecter</a>
         </nav>
     </div>
@@ -40,7 +40,7 @@ if (empty($_SESSION['id'])) { header('Location: login.php'); exit(); }
             <textarea name="description" placeholder="Décrivez votre produit..."></textarea>
         </div>
         <div class="champ-porter">
-            <label>Prix (UM)</label>
+            <label>Prix (MRU)</label>
             <input type="number" name="prix" step="0.01" placeholder="Ex: 2500">
         </div>
         <div class="champ-porter">
